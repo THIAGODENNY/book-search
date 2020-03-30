@@ -1,6 +1,6 @@
 # React Boilerplate
 
-React Boilerplate is Ramp-up project that creates wishlists.
+React Boilerplate is a Ramp-up project that creates wishlists.
 
 ## Installation
 
