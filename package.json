@@ -1,0 +1,8 @@
+{
+  "name": "react-boilerplate",
+  "version": "1.0.0",
+  "description": "React Boilerplate is Ramp-up project that creates wishlists",
+  "main": "index.js",
+  "author": "Thiago Denny",
+  "license": "MIT"
+}
