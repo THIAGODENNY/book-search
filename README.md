@@ -12,9 +12,13 @@ npm install
 ```
 
 ## Usage
-
+### Development Start
 ```bash
 npm start
+```
+### Production Build
+```bash
+npm run build
 ```
 
 ## Contributing
