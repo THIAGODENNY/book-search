@@ -11,6 +11,7 @@
     "test": "jest --config=jest.config.json"
   },
   "dependencies": {
+    "husky": "^4.2.3",
     "react": "^16.4.0-0",
     "react-dom": "^16.13.1"
   },
@@ -38,10 +39,9 @@
     "webpack-dev-server": "^3.10.3",
     "webpack-merge": "^4.1.0"
   },
-  "jest": {
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/assetsTransformer.js",
-      "\\.(css|less)$": "<rootDir>/assetsTransformer.js"
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test"
     }
   }
 }
