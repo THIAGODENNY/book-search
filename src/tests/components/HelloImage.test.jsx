@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from "enzyme";
+import { shallow } from 'enzyme';
 import HelloImage from '../../components/HelloImage';
 
 test('should render HelloImage correctly', () => {
