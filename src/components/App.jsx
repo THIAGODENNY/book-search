@@ -1,6 +1,6 @@
 import React from 'react';
 import Hello from './Hello';
-import HelloImage from './HelloImage'
+import HelloImage from './HelloImage';
 
 const App = () => (
   <div id="hello">
