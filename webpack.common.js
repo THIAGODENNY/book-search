@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    app: './src/index.js',
+    app: './src/index.jsx',
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -19,8 +19,8 @@ module.exports = {
   module: {
     rules: [{
       loader: 'babel-loader',
-      test: /\.js$/,
-      exclude: /node_modules/
+      test: /\.(js|jsx)$/,
+      exclude: /node_modules/,
     },
     {
       test: /\.css$/,
@@ -30,8 +30,10 @@ module.exports = {
       test: /\.(png|svg|jpg|gif|jpeg)$/,
       use: [
         'file-loader',
-      ]
-    }  
-  ],
+      ],
+    }],
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
   },
 };
