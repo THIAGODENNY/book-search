@@ -3,9 +3,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // eslint-disabl
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // eslint-disable-line import/no-extraneous-dependencies
 
 module.exports = {
-  entry: {
-    app: './src/index.jsx',
-  },
+  entry: ['babel-polyfill', './src/index.jsx'],
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
