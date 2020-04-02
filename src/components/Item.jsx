@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../styles/components/item.css';
+import '../styles/components/Item.css';
 
 const Item = ({ item }) => {
   const { id, selfLink, volumeInfo } = item;
