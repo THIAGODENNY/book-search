@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import '../styles/components/Item.css';
 
 const Item = ({ item }) => {
-  const { id, selfLink, volumeInfo } = item;
-  const { imageLinks, title } = volumeInfo;
+  const { id, volumeInfo } = item;
+  const { imageLinks, title, infoLink } = volumeInfo;
   const { smallThumbnail } = imageLinks || [undefined];
   const defaultUrl = 'https://sciences.ucf.edu/psychology/wp-content/uploads/sites/63/2019/09/No-Image-Available.png';
 
   return (
     <div key={id} className="item">
       <div className="card">
-        <a href={selfLink}>{title}</a>
+        <a href={infoLink}>{title}</a>
         <img src={smallThumbnail || defaultUrl} alt="Logo" />
       </div>
     </div>
@@ -27,6 +27,7 @@ Item.propTypes = {
   volumeInfo: PropTypes.shape({
     imageLinks: PropTypes.string,
     title: PropTypes.string,
+    infoLink: PropTypes.string,
   }),
   imageLinks: PropTypes.shape({
     smallThumbnail: PropTypes.string,
