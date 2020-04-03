@@ -1,17 +1,35 @@
+.search, .search-found {
+  grid-area: search-grid;
+}
+
+.items-container {
+  grid-area: items-container-grid;
+}
+
+.app {
+  display: grid;
+  grid-template-areas: 'search-grid search-grid search-grid'
+                       'items-container-grid items-container-grid items-container-grid';
+
+}
+
 .search {
-  position: absolute;
+  margin-top: 40vh;
+
   height: 50px;
   width: 40%;
   left: 50%;
-  top: 45%;
-  transform: translate(-50%);
 
   animation-name: moveDown;
   animation-duration: 600ms;
 }
 
 .search-found {
-  top: 5%;
+  margin-top: 5vh;
+
+  height: 50px;
+  width: 40%;
+  left: 50%;
 }
 
 .input-search {
@@ -31,13 +49,20 @@ input[type="text"]:focus {
   outline: none;
 }
 
+.items-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  width: 100%;
+}
+
 @keyframes moveDown {
   0% {
     opacity: 0;
-    transform: translate(-50%, -100px);
+    margin-top: -10vh;
   }
 
   100% {
     opacity: 1;
+    margin-top: 40vh;
   }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../styles/components/Item.css';
 
-const Item = ({ item }) => {
+const Item = ({ item, addItemWishlist }) => {
   const { id, volumeInfo } = item;
   const { imageLinks, title, infoLink } = volumeInfo;
   const { smallThumbnail } = imageLinks || [undefined];
@@ -12,7 +12,7 @@ const Item = ({ item }) => {
     <div key={id} className="item">
       <div className="card">
         <a href={infoLink}>{title}</a>
-        <img src={smallThumbnail || defaultUrl} alt="Logo" />
+        <input className="item-image" type="image" src={smallThumbnail || defaultUrl} alt="Logo" onClick={() => addItemWishlist(id)} />
       </div>
     </div>
   );
@@ -32,6 +32,7 @@ Item.propTypes = {
   imageLinks: PropTypes.shape({
     smallThumbnail: PropTypes.string,
   }),
+  addItemWishlist: PropTypes.func.isRequired,
 };
 
 Item.defaultProps = {
