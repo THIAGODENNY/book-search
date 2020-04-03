@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import axios from 'axios';
 import Items from './Items';
@@ -6,7 +6,7 @@ import '../styles/components/Search.css';
 
 function Search() {
   const [data, setData] = useState({ items: [] });
-  const [wishList, setWishlist] = useState({ items: [] });
+  const [wishList, setWishlist] = useState({ items: JSON.parse(localStorage.getItem('items') || '[]') });
   const [search, setSearch] = useState();
 
   const fetchData = async (searchParameters) => {
@@ -23,6 +23,10 @@ function Search() {
     setSearch(event);
     fetchData(event);
   };
+
+  useEffect(
+    () => localStorage.setItem('items', JSON.stringify(wishList.items)),
+  );
 
   const addItemWishlist = (id) => {
     const { items } = wishList;
