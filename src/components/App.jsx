@@ -1,11 +1,9 @@
 import React from 'react';
-import Hello from './Hello';
-import HelloImage from './HelloImage';
+import Search from './Search';
 
 const App = () => (
-  <div id="hello">
-    <HelloImage />
-    <Hello />
+  <div id="app">
+    <Search />
   </div>
 );
 
