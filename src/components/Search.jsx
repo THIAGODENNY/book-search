@@ -19,7 +19,10 @@ function Search() {
           },
         },
       );
-      setData(result.data);
+      const { items } = result.data;
+      if (items) {
+        setData({ items });
+      }
     }
   };
 
