@@ -17,13 +17,13 @@ const Item = ({ item, addItemWishlist }) => {
   return (
     <div key={id} className="item">
       <div className="card">
-        <a href={infoLink}>{title}</a>
+        <a className="item-title" href={infoLink}>{title}</a>
         <div className="container">
           <div className="container-image">
             <input className="item-image" type="image" src={smallThumbnail || defaultUrl} alt="Logo" onClick={() => addItemWishlist(id)} />
           </div>
           <div className="container-description">
-            <span>{description}</span>
+            <span className="item-description">{description}</span>
           </div>
         </div>
       </div>
