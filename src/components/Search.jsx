@@ -10,7 +10,7 @@ function Search() {
   const [search, setSearch] = useState();
 
   const fetchData = async (searchParameters) => {
-    setData({ item: undefined });
+    setData({ items: [] });
     if (searchParameters) {
       const result = await axios(
         `https://www.googleapis.com/books/v1/volumes?q=${searchParameters}`, {
@@ -79,16 +79,17 @@ function Search() {
       </div>
 
       <div className="items-container">
-        {(search || wishList)
+        <div className="items">
+          {data.items.length > 0 && <h1 className="title">Items found</h1>}
+          <Items items={(() => filterData())()} addItemWishlist={addItemWishlist} />
+        </div>
+        {wishList.items.length > 0
           && (
           <div className="items">
-            <Items items={(() => filterData())()} addItemWishlist={addItemWishlist} />
-          </div>
-          )}
-        {wishList
-          && (
-          <div className="items">
-            <Items items={wishList.items} addItemWishlist={removeItemWishList} />
+            <div className="items-wishlist">
+              <h1 className="title">WishList</h1>
+              <Items items={wishList.items} addItemWishlist={removeItemWishList} />
+            </div>
           </div>
           )}
       </div>
