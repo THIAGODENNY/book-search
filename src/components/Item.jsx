@@ -4,15 +4,28 @@ import '../styles/components/Item.css';
 
 const Item = ({ item, addItemWishlist }) => {
   const { id, volumeInfo } = item;
-  const { imageLinks, title, infoLink } = volumeInfo;
+  const {
+    imageLinks,
+    title,
+    infoLink,
+    description,
+  } = volumeInfo;
   const { smallThumbnail } = imageLinks || [undefined];
+
   const defaultUrl = 'https://sciences.ucf.edu/psychology/wp-content/uploads/sites/63/2019/09/No-Image-Available.png';
 
   return (
     <div key={id} className="item">
       <div className="card">
         <a href={infoLink}>{title}</a>
-        <input className="item-image" type="image" src={smallThumbnail || defaultUrl} alt="Logo" onClick={() => addItemWishlist(id)} />
+        <div className="container">
+          <div className="container-image">
+            <input className="item-image" type="image" src={smallThumbnail || defaultUrl} alt="Logo" onClick={() => addItemWishlist(id)} />
+          </div>
+          <div className="container-description">
+            <span>{description}</span>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -23,6 +36,8 @@ Item.propTypes = {
     id: PropTypes.string.isRequired,
     volumeInfo: PropTypes.object,
     selfLink: PropTypes.string,
+    searchInfo: PropTypes.object,
+    description: PropTypes.string,
   }),
   volumeInfo: PropTypes.shape({
     imageLinks: PropTypes.string,
