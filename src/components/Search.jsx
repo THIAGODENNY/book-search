@@ -13,7 +13,11 @@ function Search() {
     setData({ item: undefined });
     if (searchParameters) {
       const result = await axios(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchParameters}`,
+        `https://www.googleapis.com/books/v1/volumes?q=${searchParameters}`, {
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+          },
+        },
       );
       setData(result.data);
     }

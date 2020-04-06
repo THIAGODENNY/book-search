@@ -1,22 +1,43 @@
-.item-image {
+input {
   width: 100%;
-  height: 300px;
 }
 
 .card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  display: grid;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.container-image {
+  padding: 0;
+  grid-area: image;
+  height: 100%;
+}
+
+.container-description {
+  padding: 0px 8px;
+  grid-area: description;
+  text-align: justify;
 }
 
 .container {
-  padding: 2px 16px;
+  display: grid;
+  grid-auto-columns: 25% 75%;
+  grid-template-areas: "image description";
+  width: 100%;
+  align-items: center;
 }
 
 .item {
+  width: 20rem;
+  max-height: 120px;
   margin: 15px;
-  width: 10rem;
 }
 
-a {
-  font-family: Helvetica, sans-serif;
-  font-size: x-large;
+span {
+  display: inline-block;
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
+  white-space: wrap;
+  text-overflow: ellipsis;
 }
