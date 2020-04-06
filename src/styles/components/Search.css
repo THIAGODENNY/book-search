@@ -55,6 +55,21 @@ input[type="text"]:focus {
   width: 100%;
 }
 
+.items-wishlist {
+  display: grid;
+}
+
+.title {
+  font-size: x-large;
+  text-align: initial;
+  margin: 0px;
+  margin-top: 10px;
+}
+
+.items {
+  width: 100%;
+}
+
 @keyframes moveDown {
   0% {
     opacity: 0;

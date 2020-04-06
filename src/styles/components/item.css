@@ -40,4 +40,5 @@ span {
   overflow: hidden;
   white-space: wrap;
   text-overflow: ellipsis;
+  font-size: xx-small;
 }
