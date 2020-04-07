@@ -1,13 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
 import Items from './Items';
 import '../styles/components/Search.css';
 
 function Search() {
-  const [data, setData] = useState({ items: [] });
-  const [wishList, setWishlist] = useState({ items: JSON.parse(localStorage.getItem('items') || '[]') });
-  const [search, setSearch] = useState();
+  const dispatch = useDispatch();
+
+  const {
+    data,
+    wishList,
+    search,
+  } = useSelector((state) => state);
+
+  const [setData, setWishlist, setSearch] = [
+    (newData) => dispatch({ type: 'SET_DATA', data: newData }),
+    (newWishList) => dispatch({ type: 'SET_WISHLIST', wishList: newWishList }),
+    (newSearch) => dispatch({ type: 'SET_SEARCH', search: newSearch }),
+  ];
 
   const fetchData = async (searchParameters) => {
     setData({ items: [] });
@@ -38,6 +49,7 @@ function Search() {
   const addItemWishlist = (id) => {
     const { items } = wishList;
     const item = data.items.filter((i) => i.id === id).pop();
+    item.listName = 'testing 444444';
 
     if (items.filter((i) => i.id === id).length === 0) {
       setWishlist({ items: [...wishList.items, item] });

@@ -6,9 +6,11 @@ import {
 } from 'react-router-dom';
 
 import React from 'react';
+import { Provider } from 'react-redux';
 import Search from './Search';
+import WishList from './WishList';
 
-const WishList = () => <h1>Hello</h1>;
+import store from '../store/store';
 
 const NotFoundPage = () => (
   <div>
@@ -18,13 +20,15 @@ const NotFoundPage = () => (
 );
 
 const App = () => (
-  <BrowserRouter>
-    <Switch>
-      <Route path="/" component={Search} exact />
-      <Route path="/wishlist" component={WishList} />
-      <Route component={NotFoundPage} />
-    </Switch>
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/" component={Search} exact />
+        <Route path="/wishlist" component={WishList} />
+        <Route component={NotFoundPage} />
+      </Switch>
+    </BrowserRouter>
+  </Provider>
 );
 
 export default App;
