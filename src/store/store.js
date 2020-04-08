@@ -8,12 +8,13 @@ function wishList(state = {
     items: JSON.parse(localStorage.getItem('items') || '[]'),
   },
   search: undefined,
-  list: localStorage.getItem('list') ? localStorage.getItem('list').split(',') : [],
+  list: [],
   selectedOption: {
     isOpen: false,
     id: undefined,
   },
   createListIsOpen: false,
+  filter: undefined,
 }, action) {
   switch (action.type) {
     case 'SET_DATA':
@@ -36,6 +37,11 @@ function wishList(state = {
         ...state,
         list: [...state.list, action.setList],
       };
+    case 'SET_ALL_LIST':
+      return {
+        ...state,
+        list: action.setList,
+      };
     case 'SET_SELECTED_OPTION':
       return {
         ...state,
@@ -45,6 +51,11 @@ function wishList(state = {
       return {
         ...state,
         createListIsOpen: action.createListIsOpen,
+      };
+    case 'SET_FILTER':
+      return {
+        ...state,
+        filter: action.filter,
       };
     default:
       return state;
