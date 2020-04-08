@@ -62,8 +62,9 @@ input[type="text"]:focus {
 .title {
   font-size: x-large;
   text-align: initial;
-  margin: 0px;
+  margin: 15px;
   margin-top: 10px;
+  margin-bottom: 0;
 }
 
 .items {

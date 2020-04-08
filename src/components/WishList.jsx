@@ -1,9 +1,17 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import '../styles/components/WishList.css';
+import Item from './Item';
 
 const WishList = () => {
   const { wishList } = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const setWishlist = (newWishList) => dispatch({ type: 'SET_WISHLIST', wishList: newWishList });
+
+  const removeItemWishList = (id) => {
+    setWishlist({ items: wishList.items.filter((i) => i.id !== id) });
+  };
+
   return (
     <div className="list-wishlist">
       {wishList.items.sort((a, b) => {
@@ -25,12 +33,10 @@ const WishList = () => {
       }, [])
         .map((e) => (
           e[0].id && (
-            <div>
-              <h1>{`--------${e[0].listName}--------`}</h1>
+            <div className="items">
+              <h1 className="title wishlist-title">{`${e[0].listName}`}</h1>
               {e.map((i) => (
-                <div>
-                  <h1>{i.id}</h1>
-                </div>
+                <Item key={i.id} item={i} className="item" addItemWishlist={removeItemWishList} />
               ))}
             </div>
           )

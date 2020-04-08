@@ -11,6 +11,7 @@ import Search from './Search';
 import WishList from './WishList';
 
 import store from '../store/store';
+import Header from './Header';
 
 const NotFoundPage = () => (
   <div>
@@ -22,9 +23,10 @@ const NotFoundPage = () => (
 const App = () => (
   <Provider store={store}>
     <BrowserRouter>
+      <Header />
       <Switch>
         <Route path="/" component={Search} exact />
-        <Route path="/wishlist" component={WishList} />
+        <Route path="/wishlists" component={WishList} />
         <Route component={NotFoundPage} />
       </Switch>
     </BrowserRouter>
