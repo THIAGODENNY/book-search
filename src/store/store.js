@@ -1,6 +1,6 @@
 import { createStore } from 'redux';
 
-function counter(state = {
+function wishList(state = {
   data: {
     items: [],
   },
@@ -8,6 +8,12 @@ function counter(state = {
     items: JSON.parse(localStorage.getItem('items') || '[]'),
   },
   search: undefined,
+  list: localStorage.getItem('list') ? localStorage.getItem('list').split(',') : [],
+  selectedOption: {
+    isOpen: false,
+    id: undefined,
+  },
+  createListIsOpen: false,
 }, action) {
   switch (action.type) {
     case 'SET_DATA':
@@ -25,11 +31,26 @@ function counter(state = {
         ...state,
         search: action.search,
       };
+    case 'SET_LIST':
+      return {
+        ...state,
+        list: [...state.list, action.setList],
+      };
+    case 'SET_SELECTED_OPTION':
+      return {
+        ...state,
+        selectedOption: action.selectedOption,
+      };
+    case 'SET_CREATE_LIST_IS_OPEN':
+      return {
+        ...state,
+        createListIsOpen: action.createListIsOpen,
+      };
     default:
       return state;
   }
 }
 
-const store = createStore(counter);
+const store = createStore(wishList);
 
 export default store;

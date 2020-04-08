@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import Items from './Items';
 import '../styles/components/Search.css';
+import SelectList from './SelectList';
 
 function Search() {
   const dispatch = useDispatch();
@@ -12,12 +13,20 @@ function Search() {
     data,
     wishList,
     search,
+    selectedOption,
   } = useSelector((state) => state);
 
-  const [setData, setWishlist, setSearch] = [
+  const [
+    setData,
+    setWishlist,
+    setSearch,
+    setSelectedOption,
+  ] = [
     (newData) => dispatch({ type: 'SET_DATA', data: newData }),
     (newWishList) => dispatch({ type: 'SET_WISHLIST', wishList: newWishList }),
     (newSearch) => dispatch({ type: 'SET_SEARCH', search: newSearch }),
+    (newList) => dispatch({ type: 'SET_LIST', search: newList }),
+    (newSelectedOption) => dispatch({ type: 'SET_SELECTED_OPTION', selectedOption: newSelectedOption }),
   ];
 
   const fetchData = async (searchParameters) => {
@@ -47,13 +56,11 @@ function Search() {
   );
 
   const addItemWishlist = (id) => {
-    const { items } = wishList;
-    const item = data.items.filter((i) => i.id === id).pop();
-    item.listName = 'testing 444444';
+    setSelectedOption({ isOpened: true, id });
+  };
 
-    if (items.filter((i) => i.id === id).length === 0) {
-      setWishlist({ items: [...wishList.items, item] });
-    }
+  const onRequestClose = () => {
+    setSelectedOption({ isOpened: false });
   };
 
   const removeItemWishList = (id) => {
@@ -108,6 +115,10 @@ function Search() {
           </div>
           )}
       </div>
+      <SelectList
+        selectedOption={selectedOption}
+        onRequestClose={onRequestClose}
+      />
     </div>
   );
 }
