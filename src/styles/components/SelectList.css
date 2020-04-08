@@ -1,0 +1,25 @@
+.modal {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 35%;
+  left: 15%;
+  right: 15%;
+  bottom: 35%;
+  min-height: 100px;
+  min-width: 350px;
+  height: fit-content;
+  width: fit-content;
+  background-color: white;
+}
+
+.submit {
+  width: auto;
+}
+
+.submit-form, .submit-form-new-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
