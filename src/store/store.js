@@ -14,6 +14,7 @@ function wishList(state = {
     id: undefined,
   },
   createListIsOpen: false,
+  filter: undefined,
 }, action) {
   switch (action.type) {
     case 'SET_DATA':
@@ -45,6 +46,11 @@ function wishList(state = {
       return {
         ...state,
         createListIsOpen: action.createListIsOpen,
+      };
+    case 'SET_FILTER':
+      return {
+        ...state,
+        filter: action.filter,
       };
     default:
       return state;
