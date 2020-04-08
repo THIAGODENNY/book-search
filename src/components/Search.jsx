@@ -14,6 +14,7 @@ function Search() {
     wishList,
     search,
     selectedOption,
+    list,
   } = useSelector((state) => state);
 
   const [
@@ -51,7 +52,10 @@ function Search() {
   };
 
   useEffect(
-    () => localStorage.setItem('items', JSON.stringify(wishList.items)),
+    () => {
+      localStorage.setItem('items', JSON.stringify(wishList.items));
+      localStorage.setItem('list', list.join(','));
+    },
   );
 
   const addItemWishlist = (id) => {
