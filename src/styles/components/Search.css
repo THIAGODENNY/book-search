@@ -59,6 +59,16 @@ input[type="text"]:focus {
   display: grid;
 }
 
+.items-wishlist-title {
+  display: flex;
+  margin: 0;
+  align-items: center;
+}
+
+.items-wishlist-filter {
+  margin: 0;
+}
+
 .title {
   font-size: x-large;
   text-align: initial;

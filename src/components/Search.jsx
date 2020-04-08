@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
@@ -8,6 +8,7 @@ import SelectList from './SelectList';
 
 function Search() {
   const dispatch = useDispatch();
+  const [filter, setFilter] = useState();
 
   const {
     data,
@@ -82,6 +83,15 @@ function Search() {
     return data.items;
   };
 
+  const handleFilter = (e) => {
+    const selectedFilter = e.target.value;
+    if (selectedFilter === 'null') {
+      setFilter(null);
+    } else {
+      setFilter(selectedFilter);
+    }
+  };
+
   const debounceInputClasses = [
     'search',
     'search-found',
@@ -110,12 +120,21 @@ function Search() {
         </div>
         {wishList.items.length > 0
           && (
-          <div className="items">
-            <div className="items-wishlist">
-              <h1 className="title">WishList</h1>
-              <Items items={wishList.items} addItemWishlist={removeItemWishList} />
+            <div className="items">
+              <div className="items-wishlist">
+                <div className="items-wishlist-title">
+                  <h1 className="title">WishList</h1>
+                  <select className="items-wishlist-filter" onChange={handleFilter}>
+                    <option key="default" value="null">-- Filter --</option>
+                    {list.map((e) => <option key={e} value={e}>{e}</option>)}
+                  </select>
+                </div>
+                <Items
+                  items={wishList.items.filter((e) => (filter ? e.listName === filter : true))}
+                  addItemWishlist={removeItemWishList}
+                />
+              </div>
             </div>
-          </div>
           )}
       </div>
       <SelectList
