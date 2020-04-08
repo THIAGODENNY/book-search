@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import '../styles/components/WishList.css';
+import Item from './Item';
 
 const WishList = () => {
   const { wishList } = useSelector((state) => state);
@@ -25,12 +26,10 @@ const WishList = () => {
       }, [])
         .map((e) => (
           e[0].id && (
-            <div>
-              <h1>{`--------${e[0].listName}--------`}</h1>
+            <div className="items">
+              <h1 className="title wishlist-title">{`${e[0].listName}`}</h1>
               {e.map((i) => (
-                <div>
-                  <h1>{i.id}</h1>
-                </div>
+                <Item key={i.id} item={i} className="item" />
               ))}
             </div>
           )
