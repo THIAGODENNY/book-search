@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Items from './Items';
 import '../styles/components/Search.css';
 import SelectList from './SelectList';
+import arraysEqual from '../../tools/arraysEqual';
 
 function Search() {
   const dispatch = useDispatch();
@@ -24,12 +25,14 @@ function Search() {
     setSearch,
     setSelectedOption,
     setFilter,
+    setAllList,
   ] = [
     (newData) => dispatch({ type: 'SET_DATA', data: newData }),
     (newWishList) => dispatch({ type: 'SET_WISHLIST', wishList: newWishList }),
     (newSearch) => dispatch({ type: 'SET_SEARCH', search: newSearch }),
     (newSelectedOption) => dispatch({ type: 'SET_SELECTED_OPTION', selectedOption: newSelectedOption }),
     (newFilter) => dispatch({ type: 'SET_FILTER', filter: newFilter }),
+    (newList) => dispatch({ type: 'SET_ALL_LIST', setList: newList }),
   ];
 
   const fetchData = async (searchParameters) => {
@@ -58,6 +61,16 @@ function Search() {
     () => {
       localStorage.setItem('items', JSON.stringify(wishList.items));
       localStorage.setItem('list', list.join(','));
+
+      const wishListLists = wishList.items.map((item) => item.listName);
+      const newAllList = [...new Set(wishListLists)];
+
+      if (
+        !arraysEqual(list, newAllList)
+        && !selectedOption.isOpened
+      ) {
+        setAllList(newAllList);
+      }
     },
   );
 
