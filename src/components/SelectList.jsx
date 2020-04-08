@@ -1,8 +1,9 @@
 import React from 'react';
-import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import '../styles/components/SelectList.css';
+import InsertItem from './InsertItem';
+import CreateList from './CreateList';
 
 const SelectList = ({ selectedOption, onRequestClose }) => {
   const { isOpened, id } = selectedOption;
@@ -60,32 +61,18 @@ const SelectList = ({ selectedOption, onRequestClose }) => {
 
   return (
     <div>
-      <Modal
-        className="modal"
-        isOpen={isOpened}
-        contentLabel="Selected Option"
+      <InsertItem
+        isOpened={isOpened}
         onRequestClose={onRequestClose}
-      >
-        <form className="submit-form" onSubmit={handleSubmit}>
-          <h1>Choose a list to add:</h1>
-          <select id="list" name="list">
-            {list.map((e) => <option key={e} value={e}>{e}</option>)}
-          </select>
-          <button type="button" className="create-list" onClick={handleCreateList}>+</button>
-          <input className="submit" type="submit" />
-        </form>
-      </Modal>
-      <Modal
-        className="modal"
-        isOpen={createListIsOpen}
-        onRequestClose={handleCreateListClose}
-      >
-        <form className="submit-form" onSubmit={handleSubmitNewList}>
-          <h1>Write a list to create:</h1>
-          <input type="text" name="list" />
-          <input className="submit" type="submit" />
-        </form>
-      </Modal>
+        handleSubmit={handleSubmit}
+        list={list}
+        handleCreateList={handleCreateList}
+      />
+      <CreateList
+        createListIsOpen={createListIsOpen}
+        handleCreateListClose={handleCreateListClose}
+        handleSubmitNewList={handleSubmitNewList}
+      />
     </div>
   );
 };
