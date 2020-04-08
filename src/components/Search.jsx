@@ -25,7 +25,6 @@ function Search() {
     (newData) => dispatch({ type: 'SET_DATA', data: newData }),
     (newWishList) => dispatch({ type: 'SET_WISHLIST', wishList: newWishList }),
     (newSearch) => dispatch({ type: 'SET_SEARCH', search: newSearch }),
-    (newList) => dispatch({ type: 'SET_LIST', search: newList }),
     (newSelectedOption) => dispatch({ type: 'SET_SELECTED_OPTION', selectedOption: newSelectedOption }),
   ];
 
