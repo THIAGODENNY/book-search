@@ -18,6 +18,8 @@ function Search() {
     list,
   } = useSelector((state) => state);
 
+  console.log(search);
+
   const [
     setData,
     setWishlist,
@@ -110,6 +112,7 @@ function Search() {
           onChange={(event) => searchHandle(event.target.value)}
           debounceTimeout={300}
           className="input-search"
+          value={search}
         />
       </div>
 
