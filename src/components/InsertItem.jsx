@@ -8,6 +8,8 @@ const InsertItem = ({
   handleSubmit,
   list,
   handleCreateList,
+  selectedListItem,
+  handleSelectedListChange,
 }) => (
   <Modal
     className="modal"
@@ -17,7 +19,7 @@ const InsertItem = ({
   >
     <form className="submit-form" onSubmit={handleSubmit}>
       <h1>Choose a list to add:</h1>
-      <select id="list" name="list">
+      <select id="list" name="list" value={selectedListItem} onChange={handleSelectedListChange}>
         {list.map((e) => <option key={e} value={e}>{e}</option>)}
       </select>
       <button type="button" className="create-list" onClick={handleCreateList}>+</button>
@@ -32,6 +34,12 @@ InsertItem.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   list: PropTypes.arrayOf(PropTypes.string).isRequired,
   handleCreateList: PropTypes.string.isRequired,
+  handleSelectedListChange: PropTypes.func.isRequired,
+  selectedListItem: PropTypes.string,
+};
+
+InsertItem.defaultProps = {
+  selectedListItem: undefined,
 };
 
 export default InsertItem;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import '../styles/components/SelectList.css';
@@ -7,6 +7,7 @@ import CreateList from './CreateList';
 
 const SelectList = ({ selectedOption, onRequestClose }) => {
   const { isOpened, id } = selectedOption;
+  const [selectedListItem, setSelectedListItem] = useState();
 
   const dispatch = useDispatch();
   const {
@@ -56,8 +57,11 @@ const SelectList = ({ selectedOption, onRequestClose }) => {
     if (newListValue) {
       setList(newListValue);
     }
+    setSelectedListItem(newListValue);
     handleCreateListClose();
   };
+
+  const handleSelectedListChange = (e) => setSelectedListItem(e.target.value);
 
   return (
     <div>
@@ -67,6 +71,8 @@ const SelectList = ({ selectedOption, onRequestClose }) => {
         handleSubmit={handleSubmit}
         list={list}
         handleCreateList={handleCreateList}
+        selectedListItem={selectedListItem}
+        handleSelectedListChange={handleSelectedListChange}
       />
       <CreateList
         createListIsOpen={createListIsOpen}
