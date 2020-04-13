@@ -16,16 +16,10 @@ const Item = ({ item, addItemWishlist }) => {
 
   return (
     <div key={id} className="item">
-      <div className="card">
-        <a className="item-title" href={infoLink}>{title}</a>
-        <div className="container">
-          <div className="container-image">
-            <input className="item-image" type="image" src={smallThumbnail || defaultUrl} alt="Logo" onClick={() => addItemWishlist(id)} />
-          </div>
-          <div className="container-description">
-            <span className="item-description">{description}</span>
-          </div>
-        </div>
+      <a className="item__title" href={infoLink}>{title}</a>
+      <div className="item__container">
+        <input className="item__container__image" type="image" src={smallThumbnail || defaultUrl} alt="Logo" onClick={() => addItemWishlist(id)} />
+        <span className="item__container__description">{description}</span>
       </div>
     </div>
   );
