@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../styles/components/Item.css';
+import '../styles/components/Item.scss';
 
 const Item = ({ item, addItemWishlist }) => {
   const { id, volumeInfo } = item;

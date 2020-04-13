@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import '../styles/components/WishList.css';
+import '../styles/components/WishList.scss';
 import Item from './Item';
 
 class WishList extends Component {
