@@ -109,12 +109,12 @@ function Search() {
   };
 
   const debounceInputClasses = [
-    'search',
-    'search-found',
+    'search__search',
+    'search__search--found',
   ];
 
   return (
-    <div className="app-container">
+    <div className="search">
       <div className={
         (search || wishList.items.length > 0)
           ? debounceInputClasses[1]
@@ -125,32 +125,30 @@ function Search() {
           minLength={2}
           onChange={(event) => searchHandle(event.target.value)}
           debounceTimeout={50}
-          className="input-search"
+          className="search__search__input-search"
           value={search}
         />
       </div>
 
-      <div className="items-container">
-        <div className="items">
-          {data.items.length > 0 && <h1 className="title">Items found</h1>}
+      <div className="search__items">
+        <div className="search__items__found">
+          {data.items.length > 0 && <h1 className="search__items__found__title">Items found</h1>}
           <Items items={(() => filterData())()} addItemWishlist={addItemWishlist} />
         </div>
         {wishList.items.length > 0
           && (
-            <div className="items">
-              <div className="items-wishlist">
-                <div className="items-wishlist-title">
-                  <h1 className="title">WishList</h1>
-                  <select className="items-wishlist-filter" onChange={handleFilter} value={filter}>
-                    <option key="default" value="null">-- Filter --</option>
-                    {list.map((e) => <option key={e} value={e}>{e}</option>)}
-                  </select>
-                </div>
-                <Items
-                  items={wishList.items.filter((e) => (filter ? e.listName === filter : true))}
-                  addItemWishlist={removeItemWishList}
-                />
+            <div className="search__items__wishlist">
+              <div className="search__items__wishlist__header">
+                <h1 className="search__items__wishlist__header__title">WishList</h1>
+                <select className="search__items__wishlist__header__filter" onChange={handleFilter} value={filter}>
+                  <option key="default" value="null">-- Filter --</option>
+                  {list.map((e) => <option key={e} value={e}>{e}</option>)}
+                </select>
               </div>
+              <Items
+                items={wishList.items.filter((e) => (filter ? e.listName === filter : true))}
+                addItemWishlist={removeItemWishList}
+              />
             </div>
           )}
       </div>

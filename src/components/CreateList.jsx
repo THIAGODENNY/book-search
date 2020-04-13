@@ -1,17 +1,18 @@
 import React from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
+import '../styles/components/CreateList.scss';
 
 const CreateList = ({ createListIsOpen, handleCreateListClose, handleSubmitNewList }) => (
   <Modal
-    className="modal"
+    className="create-list"
     isOpen={createListIsOpen}
     onRequestClose={handleCreateListClose}
   >
-    <form className="submit-form" onSubmit={handleSubmitNewList}>
+    <form className="create-list__submit-form" onSubmit={handleSubmitNewList}>
       <h1>Write a list to create:</h1>
       <input type="text" name="list" />
-      <input className="submit" type="submit" />
+      <input className="create-list__submit-form__submit" type="submit" />
     </form>
   </Modal>
 );

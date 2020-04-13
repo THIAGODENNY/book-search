@@ -1,4 +1,4 @@
-.modal {
+.create-list {
   position: absolute;
   display: flex;
   align-items: center;
@@ -11,15 +11,15 @@
   height: fit-content;
   width: fit-content;
   background-color: white;
-}
 
-.submit {
-  width: auto;
-}
+  &__submit-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
 
-.submit-form, .submit-form-new-list {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 100%;
+    &__submit {
+      width: auto;
+    }
+  }
 }
