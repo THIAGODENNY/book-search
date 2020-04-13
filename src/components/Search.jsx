@@ -70,6 +70,7 @@ function Search() {
         && !selectedOption.isOpened
       ) {
         setAllList(newAllList);
+        setFilter(null);
       }
     },
   );
@@ -100,7 +101,7 @@ function Search() {
 
   const handleFilter = (e) => {
     const selectedFilter = e.target.value;
-    if (selectedFilter === 'null') {
+    if (selectedFilter === 'null' || !selectedFilter) {
       setFilter(null);
     } else {
       setFilter(selectedFilter);
@@ -123,7 +124,7 @@ function Search() {
         <DebounceInput
           minLength={2}
           onChange={(event) => searchHandle(event.target.value)}
-          debounceTimeout={300}
+          debounceTimeout={50}
           className="input-search"
           value={search}
         />

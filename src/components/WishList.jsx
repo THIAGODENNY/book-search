@@ -1,48 +1,59 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import '../styles/components/WishList.css';
 import Item from './Item';
 
-const WishList = () => {
-  const { wishList } = useSelector((state) => state);
-  const dispatch = useDispatch();
-  const setWishlist = (newWishList) => dispatch({ type: 'SET_WISHLIST', wishList: newWishList });
+class WishList extends Component {
+  render() {
+    const { wishList, dispatch } = this.props;
+    const setWishlist = (newWishList) => ({ type: 'SET_WISHLIST', wishList: newWishList });
 
-  const removeItemWishList = (id) => {
-    setWishlist({ items: wishList.items.filter((i) => i.id !== id) });
-  };
+    const removeItemWishList = (id) => {
+      dispatch(setWishlist({ items: wishList.items.filter((i) => i.id !== id) }));
+    };
 
-  return (
-    <div className="list-wishlist">
-      {wishList.items.sort((a, b) => {
-        if (a.listName > b.listName) {
-          return 1;
-        }
-        if (a.listName < b.listName) {
-          return -1;
-        }
-        return 0;
-      }).reduce((accumulator, currentElement) => {
-        const index = accumulator
-          .map((e, i) => (e[0].listName === currentElement.listName ? i : -1))
-          .filter((e) => e > -1).pop();
-        if (index === undefined) {
-          return [...accumulator, [currentElement]];
-        }
-        return [...accumulator, [accumulator[index].push(currentElement)]];
-      }, [])
-        .map((e) => (
-          e[0].id && (
-            <div className="items">
-              <h1 className="title wishlist-title">{`${e[0].listName}`}</h1>
-              {e.map((i) => (
-                <Item key={i.id} item={i} className="item" addItemWishlist={removeItemWishList} />
-              ))}
-            </div>
-          )
-        ))}
-    </div>
-  );
+    return (
+      <div className="list-wishlist">
+        {wishList.items.sort((a, b) => {
+          if (a.listName > b.listName) {
+            return 1;
+          }
+          if (a.listName < b.listName) {
+            return -1;
+          }
+          return 0;
+        }).reduce((accumulator, currentElement) => {
+          const index = accumulator
+            .map((e, i) => (e[0].listName === currentElement.listName ? i : -1))
+            .filter((e) => e > -1).pop();
+          if (index === undefined) {
+            return [...accumulator, [currentElement]];
+          }
+          return [...accumulator, [accumulator[index].push(currentElement)]];
+        }, [])
+          .map((e) => (
+            e[0].id && (
+              <div className="items">
+                <h1 className="title wishlist-title">{`${e[0].listName}`}</h1>
+                {e.map((i) => (
+                  <Item key={i.id} item={i} className="item" addItemWishlist={removeItemWishList} />
+                ))}
+              </div>
+            )
+          ))}
+      </div>
+    );
+  }
+}
+
+WishList.propTypes = {
+  wishList: PropTypes.shape({
+    items: PropTypes.arrayOf(
+      PropTypes.object,
+    ).isRequired,
+  }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
-export default WishList;
+export default connect((state) => ({ wishList: state.wishList }))(WishList);

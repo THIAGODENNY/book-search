@@ -2,6 +2,7 @@
   display: flow-root;
   height: 50px;
   border-style: outset;
+  width: 100%;
 }
 
 .header-links {
