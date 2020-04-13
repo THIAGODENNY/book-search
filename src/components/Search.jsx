@@ -3,7 +3,7 @@ import { DebounceInput } from 'react-debounce-input';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import Items from './Items';
-import '../styles/components/Search.css';
+import '../styles/components/Search.scss';
 import SelectList from './SelectList';
 import arraysEqual from '../../tools/arraysEqual';
 
