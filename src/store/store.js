@@ -1,4 +1,5 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 function wishList(state = {
   data: {
@@ -62,6 +63,6 @@ function wishList(state = {
   }
 }
 
-const store = createStore(wishList);
+const store = createStore(wishList, composeWithDevTools());
 
 export default store;
