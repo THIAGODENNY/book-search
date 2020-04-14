@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Item.scss';
+import defaultImage from '../../assets/No-Image-Available.png';
 
 const Item = ({ item, addItemWishlist }) => {
   const { id, volumeInfo } = item;
@@ -12,13 +13,11 @@ const Item = ({ item, addItemWishlist }) => {
   } = volumeInfo;
   const { smallThumbnail } = imageLinks || [undefined];
 
-  const defaultUrl = 'https://sciences.ucf.edu/psychology/wp-content/uploads/sites/63/2019/09/No-Image-Available.png';
-
   return (
     <div key={id} className="item">
       <a className="item__title" href={infoLink}>{title}</a>
       <div className="item__container">
-        <input className="item__container__image" type="image" src={smallThumbnail || defaultUrl} alt="Logo" onClick={() => addItemWishlist(id)} />
+        <input className="item__container__image" type="image" src={smallThumbnail || defaultImage} alt="Logo" onClick={() => addItemWishlist(id)} />
         <span className="item__container__description">{description}</span>
       </div>
     </div>
