@@ -7,11 +7,11 @@ import {
 
 import React from 'react';
 import { Provider } from 'react-redux';
-import Search from './Search';
-import WishList from './WishList';
+import Search from '../Search';
+import WishList from '../WishList';
 
-import store from '../store/store';
-import Header from './Header';
+import store from '../../store/store';
+import Header from '../Header';
 
 const NotFoundPage = () => (
   <div>

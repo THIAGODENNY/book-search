@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Item from './Item';
-import '../styles/components/Items.scss';
+import Item from '../Item';
+import './Items.scss';
 
 const Items = ({ items, addItemWishlist }) => (
   <div className="component-items">

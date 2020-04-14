@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import InsertItem from './InsertItem';
-import CreateList from './CreateList';
+import InsertItem from '../InsertItem';
+import CreateList from '../CreateList';
 
 const SelectList = ({ selectedOption, onRequestClose }) => {
   const { isOpened, id } = selectedOption;

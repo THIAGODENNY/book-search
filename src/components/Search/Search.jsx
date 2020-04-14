@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import Items from './Items';
-import '../styles/components/Search.scss';
-import SelectList from './SelectList';
-import arraysEqual from '../../tools/arraysEqual';
+import Items from '../Items';
+import './Search.scss';
+import SelectList from '../SelectList';
+import arraysEqual from '../../../tools/arraysEqual';
 
 function Search() {
   const dispatch = useDispatch();
