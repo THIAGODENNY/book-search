@@ -1,32 +1,26 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import InsertItem from '../InsertItem';
 import CreateList from '../CreateList';
+import {
+  updateWishList,
+  updateSelectedOption,
+  updateList,
+  handleCreateListClose,
+  handleCreateList,
+} from '../../redux/actions';
 
 const SelectList = ({ selectedOption, onRequestClose }) => {
   const { isOpened, id } = selectedOption;
   const [selectedListItem, setSelectedListItem] = useState();
 
-  const dispatch = useDispatch();
   const {
     data,
     wishList,
     list,
     createListIsOpen,
   } = useSelector((state) => state);
-  const [
-    setWishlist,
-    setSelectedOption,
-    setList,
-    setCreateListIsOpen,
-  ] = [
-    (newWishList) => dispatch({ type: 'SET_WISHLIST', wishList: newWishList }),
-    (newSelectedOption) => dispatch({ type: 'SET_SELECTED_OPTION', selectedOption: newSelectedOption }),
-    (newList) => dispatch({ type: 'SET_LIST', setList: newList }),
-    (newCreateListIsOpen) => dispatch({ type: 'SET_CREATE_LIST_IS_OPEN', createListIsOpen: newCreateListIsOpen }),
-  ];
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,25 +30,16 @@ const SelectList = ({ selectedOption, onRequestClose }) => {
     item.listName = e.target.list.value;
 
     if (items.filter((i) => i.id === id).length === 0) {
-      setWishlist({ items: [...wishList.items, item] });
+      updateWishList({ items: [...wishList.items, item] });
     }
-    setSelectedOption({ isOpened: false });
-  };
-
-  const handleCreateList = (e) => {
-    e.preventDefault();
-    setCreateListIsOpen(true);
-  };
-
-  const handleCreateListClose = () => {
-    setCreateListIsOpen(false);
+    updateSelectedOption({ isOpened: false });
   };
 
   const handleSubmitNewList = (e) => {
     e.preventDefault();
     const newListValue = e.target.elements.list.value;
     if (newListValue) {
-      setList(newListValue);
+      updateList(newListValue);
     }
     setSelectedListItem(newListValue);
     handleCreateListClose();
