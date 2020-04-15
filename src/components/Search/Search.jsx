@@ -1,15 +1,22 @@
 import React, { useEffect } from 'react';
 import { DebounceInput } from 'react-debounce-input';
-import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Items from '../Items';
 import './Search.scss';
 import SelectList from '../SelectList';
 import arraysEqual from '../../../tools/arraysEqual';
 
-function Search() {
-  const dispatch = useDispatch();
+import {
+  updateFilter,
+  updateAllList,
+  searchHandle,
+  handleFilter,
+  addItemWishlist,
+  onRequestClose,
+  removeItemWishList,
+} from '../../redux/actions';
 
+function Search() {
   const {
     data,
     wishList,
@@ -18,44 +25,6 @@ function Search() {
     list,
     filter,
   } = useSelector((state) => state);
-
-  const [
-    setData,
-    setWishlist,
-    setSearch,
-    setSelectedOption,
-    setFilter,
-    setAllList,
-  ] = [
-    (newData) => dispatch({ type: 'SET_DATA', data: newData }),
-    (newWishList) => dispatch({ type: 'SET_WISHLIST', wishList: newWishList }),
-    (newSearch) => dispatch({ type: 'SET_SEARCH', search: newSearch }),
-    (newSelectedOption) => dispatch({ type: 'SET_SELECTED_OPTION', selectedOption: newSelectedOption }),
-    (newFilter) => dispatch({ type: 'SET_FILTER', filter: newFilter }),
-    (newList) => dispatch({ type: 'SET_ALL_LIST', setList: newList }),
-  ];
-
-  const fetchData = async (searchParameters) => {
-    setData({ items: [] });
-    if (searchParameters) {
-      const result = await axios(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchParameters}`, {
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-          },
-        },
-      );
-      const { items } = result.data;
-      if (items) {
-        setData({ items });
-      }
-    }
-  };
-
-  const searchHandle = (event) => {
-    setSearch(event);
-    fetchData(event);
-  };
 
   useEffect(
     () => {
@@ -69,23 +38,11 @@ function Search() {
         !arraysEqual(list, newAllList)
         && !selectedOption.isOpened
       ) {
-        setAllList(newAllList);
-        setFilter(null);
+        updateAllList(newAllList);
+        updateFilter(null);
       }
     },
   );
-
-  const addItemWishlist = (id) => {
-    setSelectedOption({ isOpened: true, id });
-  };
-
-  const onRequestClose = () => {
-    setSelectedOption({ isOpened: false });
-  };
-
-  const removeItemWishList = (id) => {
-    setWishlist({ items: wishList.items.filter((i) => i.id !== id) });
-  };
 
   const filterData = () => {
     const { items } = wishList;
@@ -97,15 +54,6 @@ function Search() {
         .length === 0);
     }
     return data.items;
-  };
-
-  const handleFilter = (e) => {
-    const selectedFilter = e.target.value;
-    if (selectedFilter === 'null' || !selectedFilter) {
-      setFilter(null);
-    } else {
-      setFilter(selectedFilter);
-    }
   };
 
   const debounceInputClasses = [
@@ -124,7 +72,7 @@ function Search() {
         <DebounceInput
           minLength={2}
           onChange={(event) => searchHandle(event.target.value)}
-          debounceTimeout={50}
+          debounceTimeout={1000}
           className="search__search__input-search"
           value={search}
         />
@@ -147,7 +95,11 @@ function Search() {
               </div>
               <Items
                 items={wishList.items.filter((e) => (filter ? e.listName === filter : true))}
-                addItemWishlist={removeItemWishList}
+                addItemWishlist={
+                  (id) => removeItemWishList(
+                    wishList.items.filter((i) => i.id !== id),
+                  )
+                }
               />
             </div>
           )}

@@ -3,8 +3,28 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './WishList.scss';
 import Item from '../Item';
+import { updateFilter, updateAllList } from '../../redux/actions';
+import arraysEqual from '../../../tools/arraysEqual';
 
 class WishList extends Component {
+  componentDidUpdate() {
+    const {
+      wishList,
+      list,
+    } = this.props;
+
+    localStorage.setItem('items', JSON.stringify(wishList.items));
+    localStorage.setItem('list', list.join(','));
+
+    const wishListLists = wishList.items.map((item) => item.listName);
+    const newAllList = [...new Set(wishListLists)];
+
+    if (!arraysEqual(list, newAllList)) {
+      updateAllList(newAllList);
+      updateFilter(null);
+    }
+  }
+
   render() {
     const { wishList, dispatch } = this.props;
     const setWishlist = (newWishList) => ({ type: 'SET_WISHLIST', wishList: newWishList });
@@ -53,7 +73,17 @@ WishList.propTypes = {
       PropTypes.object,
     ).isRequired,
   }).isRequired,
+  list: PropTypes.arrayOf(
+    PropTypes.string,
+  ).isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
-export default connect((state) => ({ wishList: state.wishList }))(WishList);
+const mapStateToProps = (state) => (
+  {
+    wishList: state.wishList,
+    list: state.list,
+  }
+);
+
+export default connect(mapStateToProps)(WishList);

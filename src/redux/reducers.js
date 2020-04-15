@@ -1,7 +1,4 @@
-import { createStore } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-
-function wishList(state = {
+const initialState = {
   data: {
     items: [],
   },
@@ -16,7 +13,9 @@ function wishList(state = {
   },
   createListIsOpen: false,
   filter: undefined,
-}, action) {
+};
+
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_DATA':
       return {
@@ -36,12 +35,12 @@ function wishList(state = {
     case 'SET_LIST':
       return {
         ...state,
-        list: [...state.list, action.setList],
+        list: [...state.list, action.list],
       };
     case 'SET_ALL_LIST':
       return {
         ...state,
-        list: action.setList,
+        list: action.list,
       };
     case 'SET_SELECTED_OPTION':
       return {
@@ -61,8 +60,6 @@ function wishList(state = {
     default:
       return state;
   }
-}
+};
 
-const store = createStore(wishList, composeWithDevTools());
-
-export default store;
+export default reducer;
