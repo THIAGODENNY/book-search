@@ -57,6 +57,7 @@ const SelectList = ({ selectedOption, onRequestClose }) => {
         handleCreateList={handleCreateList}
         selectedListItem={selectedListItem}
         handleSelectedListChange={handleSelectedListChange}
+        id={id}
       />
       <CreateList
         createListIsOpen={createListIsOpen}
