@@ -48,14 +48,22 @@ function Search() {
     },
   );
 
+  const handleLoadMoreItems = () => {
+    getMorePages();
+  };
+
   const filterData = () => {
     const { items } = wishList;
 
     if (items.length > 0 && data.items) {
-      return data.items.filter((item) => items.filter(
+      const itemsToLoad = data.items.filter((item) => items.filter(
         (wishListItem) => item.id === wishListItem.id,
       )
         .length === 0);
+      if (data.items.length > 0 && itemsToLoad.length < 10 && hasMoreItems) {
+        handleLoadMoreItems();
+      }
+      return itemsToLoad;
     }
     return data.items;
   };
@@ -64,10 +72,6 @@ function Search() {
     'search__search',
     'search__search--found',
   ];
-
-  const handleLoadMoreItems = () => {
-    getMorePages();
-  };
 
   return (
     <div className="search">
