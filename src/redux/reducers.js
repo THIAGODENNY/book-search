@@ -2,6 +2,7 @@ const initialState = {
   data: {
     items: [],
   },
+  page: 0,
   wishList: {
     items: JSON.parse(localStorage.getItem('items') || '[]'),
   },
@@ -13,6 +14,7 @@ const initialState = {
   },
   createListIsOpen: false,
   filter: undefined,
+  hasMoreItems: true,
 };
 
 const reducer = (state = initialState, action) => {
@@ -21,6 +23,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         data: action.data,
+      };
+    case 'INCREMENT_PAGE':
+      return {
+        ...state,
+        page: state.page + 10,
+      };
+    case 'RESET_PAGE':
+      return {
+        ...state,
+        page: 0,
       };
     case 'SET_WISHLIST':
       return {
@@ -56,6 +68,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         filter: action.filter,
+      };
+    case 'SET_HAS_MORE_ITEMS':
+      return {
+        ...state,
+        hasMoreItems: true,
+      };
+    case 'RESET_HAS_MORE_ITEMS':
+      return {
+        ...state,
+        hasMoreItems: false,
       };
     default:
       return state;

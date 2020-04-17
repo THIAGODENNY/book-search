@@ -9,6 +9,10 @@ const setFilter = (filter) => ({ type: 'SET_FILTER', filter });
 const setAllList = (list) => ({ type: 'SET_ALL_LIST', list });
 const setList = (list) => ({ type: 'SET_LIST', list });
 const setCreateListIsOpen = (createListIsOpen) => ({ type: 'SET_CREATE_LIST_IS_OPEN', createListIsOpen });
+const setResetPage = () => ({ type: 'RESET_PAGE' });
+const setIncrementPage = () => ({ type: 'INCREMENT_PAGE' });
+const setHasMoreItems = () => ({ type: 'SET_HAS_MORE_ITEMS' });
+const resetHasMoreItems = () => ({ type: 'RESET_HAS_MORE_ITEMS' });
 
 export const updateItemsData = (item) => store.dispatch(setData(item));
 export const updateWishList = (item) => store.dispatch(setWishList(item));
@@ -20,12 +24,20 @@ export const updateList = (list) => store.dispatch(setList(list));
 export const updateCreateListIsOpen = (createListIsOpen) => store.dispatch(
   setCreateListIsOpen(createListIsOpen),
 );
+export const resetPage = () => store.dispatch(setResetPage());
+export const incrementPage = () => store.dispatch(setIncrementPage());
+export const updateHasMoreItems = (state) => {
+  if (state) {
+    return store.dispatch(setHasMoreItems());
+  }
+  return store.dispatch(resetHasMoreItems());
+};
 
-const fetchData = async (searchParameters) => {
-  updateItemsData({ items: [] });
-  if (searchParameters) {
+const fetchData = async () => {
+  const { page, data, search } = store.getState();
+  if (search) {
     const result = await axios(
-      `https://www.googleapis.com/books/v1/volumes?q=${searchParameters}`, {
+      `https://www.googleapis.com/books/v1/volumes?q=${search}&startIndex=${page}`, {
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
         },
@@ -33,14 +45,29 @@ const fetchData = async (searchParameters) => {
     );
     const { items } = result.data;
     if (items) {
-      updateItemsData({ items });
+      if (page === 0) {
+        updateHasMoreItems(true);
+        updateItemsData({ items });
+      } else {
+        const newItems = data.items.concat(items);
+        updateItemsData({ items: newItems });
+      }
+      incrementPage();
+    } else {
+      updateHasMoreItems(false);
     }
   }
 };
 
+export const getMorePages = () => {
+  fetchData();
+};
+
 export const searchHandle = (event) => {
+  updateItemsData({ items: [] });
+  resetPage();
   updateSearch(event);
-  fetchData(event);
+  fetchData();
 };
 
 export const handleFilter = (e) => {
