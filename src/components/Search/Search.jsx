@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useSelector } from 'react-redux';
+import InfiniteScroll from 'react-infinite-scroller';
 import Items from '../Items';
 import './Search.scss';
 import SelectList from '../SelectList';
@@ -14,7 +15,9 @@ import {
   addItemWishlist,
   onRequestClose,
   removeItemWishList,
+  getMorePages,
 } from '../../redux/actions';
+
 
 function Search() {
   const {
@@ -24,6 +27,7 @@ function Search() {
     selectedOption,
     list,
     filter,
+    hasMoreItems,
   } = useSelector((state) => state);
 
   useEffect(
@@ -61,6 +65,10 @@ function Search() {
     'search__search--found',
   ];
 
+  const handleLoadMoreItems = () => {
+    getMorePages();
+  };
+
   return (
     <div className="search">
       <div className={
@@ -81,7 +89,15 @@ function Search() {
       <div className="search__items">
         <div className="search__items__found">
           {data.items.length > 0 && <h1 className="search__items__found__title">Items found</h1>}
-          <Items items={(() => filterData())()} addItemWishlist={addItemWishlist} />
+          <InfiniteScroll
+            initialLoad={false}
+            pageStart={0}
+            loadMore={() => handleLoadMoreItems()}
+            hasMore={hasMoreItems}
+            loader={data.items.length > 0 && <div className="loader" key={0}>Loading ...</div>}
+          >
+            <Items items={(() => filterData())()} addItemWishlist={addItemWishlist} />
+          </InfiniteScroll>
         </div>
         {wishList.items.length > 0
           && (
