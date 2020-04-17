@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 import './InsertItem.scss';
+import defaultImage from '../../assets/No-Image-Available.png';
 
 const InsertItem = ({
   isOpened,
@@ -32,7 +33,7 @@ const InsertItem = ({
               <span className="insert-item__body__description__authors">{item.volumeInfo.authors}</span>
               <span className="insert-item__body__description__description">{item.volumeInfo.description}</span>
             </div>
-            <input className="insert-item__body__image" type="image" src={item.volumeInfo.imageLinks.smallThumbnail} alt="logo" />
+            <input className="insert-item__body__image" type="image" src={item.volumeInfo.imageLinks ? item.volumeInfo.imageLinks.smallThumbnail : defaultImage} alt="logo" />
             <div className="insert-item__body__info">
               <span className="insert-item__body__info__categories">{item.volumeInfo.categories}</span>
               <span className="insert-item__body__info__pages">
