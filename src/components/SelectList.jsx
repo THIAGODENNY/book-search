@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import '../styles/components/SelectList.scss';
 import InsertItem from './InsertItem';
 import CreateList from './CreateList';
 

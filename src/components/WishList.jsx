@@ -14,7 +14,7 @@ class WishList extends Component {
     };
 
     return (
-      <div className="list-wishlist">
+      <div className="wishlist">
         {wishList.items.sort((a, b) => {
           if (a.listName > b.listName) {
             return 1;
@@ -34,10 +34,10 @@ class WishList extends Component {
         }, [])
           .map((e) => (
             e[0].id && (
-              <div className="items">
-                <h1 className="title wishlist-title">{`${e[0].listName}`}</h1>
+              <div className="wishlist__items">
+                <h1 className="wishlist__items__title">{`${e[0].listName}`}</h1>
                 {e.map((i) => (
-                  <Item key={i.id} item={i} className="item" addItemWishlist={removeItemWishList} />
+                  <Item key={i.id} item={i} addItemWishlist={removeItemWishList} />
                 ))}
               </div>
             )

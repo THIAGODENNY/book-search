@@ -4,9 +4,9 @@ import Item from './Item';
 import '../styles/components/Items.scss';
 
 const Items = ({ items, addItemWishlist }) => (
-  <div className="container-items">
+  <div className="component-items">
     {items && items.map((item) => (
-      <Item key={item.id} item={item} className="item" addItemWishlist={addItemWishlist} />
+      <Item key={item.id} item={item} addItemWishlist={addItemWishlist} />
     ))}
   </div>
 );
