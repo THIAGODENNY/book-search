@@ -3,13 +3,18 @@ import PropTypes from 'prop-types';
 import Item from '../Item';
 import './Items.scss';
 
-const Items = ({ items, addItemWishlist }) => (
-  <div className="component-items">
-    {items && items.map((item) => (
-      <Item key={item.id} item={item} addItemWishlist={addItemWishlist} />
-    ))}
-  </div>
-);
+const Items = ({ items, addItemWishlist }) => {
+  if (!items) {
+    return <div className="component-items" />;
+  }
+  return (
+    <div className="component-items">
+      {items && items.map((item) => (
+        <Item key={item.id} item={item} addItemWishlist={addItemWishlist} />
+      ))}
+    </div>
+  );
+};
 
 Items.propTypes = {
   items: PropTypes.arrayOf(

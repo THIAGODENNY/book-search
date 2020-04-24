@@ -1,0 +1,19 @@
+.wishlist-list {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 10%;
+  left: 10%;
+  right: 10%;
+  bottom: 10%;
+  height: 80%;
+  width: 80%;
+  background-color: white;
+  border: 1px solid blue;
+  overflow: scroll;
+  &__list {
+    display: grid;
+    grid-template-columns: min-content;
+    max-height: -webkit-fill-available;
+  }
+}

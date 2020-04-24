@@ -2,11 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './WishList.scss';
-import Item from '../Item';
 import { updateFilter, updateAllList } from '../../redux/actions';
 import arraysEqual from '../../../tools/arraysEqual';
+import Carousel from '../Carousel';
+import WishlistList from '../WishlistList/WishlistList';
 
 class WishList extends Component {
+  constructor() {
+    super();
+    this.state = {
+      listName: undefined,
+    };
+  }
+
   componentDidUpdate() {
     const {
       wishList,
@@ -27,41 +35,58 @@ class WishList extends Component {
 
   render() {
     const { wishList, dispatch } = this.props;
+    const { listName } = this.state;
+
     const setWishlist = (newWishList) => ({ type: 'SET_WISHLIST', wishList: newWishList });
 
-    const removeItemWishList = (id) => {
-      dispatch(setWishlist({ items: wishList.items.filter((i) => i.id !== id) }));
+    const handleShowItems = (list) => {
+      this.setState({ listName: list });
     };
 
+    const handleHideItems = () => {
+      this.setState({ listName: undefined });
+    };
+
+    const removeItemWishList = (id) => {
+      const removedWishlist = wishList.items.filter((i) => i.id !== id);
+      dispatch(setWishlist({ items: removedWishlist }));
+
+      const listExists = removedWishlist
+        .filter((list) => list.listName === listName)
+        .length !== 0;
+
+      if (!listExists) {
+        handleHideItems();
+      }
+    };
+
+    const items = wishList.items.sort((a, b) => {
+      if (a.listName > b.listName) {
+        return 1;
+      }
+      if (a.listName < b.listName) {
+        return -1;
+      }
+      return 0;
+    }).reduce((accumulator, currentElement) => {
+      const index = accumulator
+        .map((e, i) => (e[0].listName === currentElement.listName ? i : -1))
+        .filter((e) => e > -1).pop();
+      if (index === undefined) {
+        return [...accumulator, [currentElement]];
+      }
+      return [...accumulator, [accumulator[index].push(currentElement)]];
+    }, []);
+
     return (
-      <div className="wishlist">
-        {wishList.items.sort((a, b) => {
-          if (a.listName > b.listName) {
-            return 1;
-          }
-          if (a.listName < b.listName) {
-            return -1;
-          }
-          return 0;
-        }).reduce((accumulator, currentElement) => {
-          const index = accumulator
-            .map((e, i) => (e[0].listName === currentElement.listName ? i : -1))
-            .filter((e) => e > -1).pop();
-          if (index === undefined) {
-            return [...accumulator, [currentElement]];
-          }
-          return [...accumulator, [accumulator[index].push(currentElement)]];
-        }, [])
-          .map((e) => (
-            e[0].id && (
-              <div className="wishlist__items">
-                <h1 className="wishlist__items__title">{`${e[0].listName}`}</h1>
-                {e.map((i) => (
-                  <Item key={i.id} item={i} addItemWishlist={removeItemWishList} />
-                ))}
-              </div>
-            )
-          ))}
+      <div>
+        <Carousel items={items} showItems={handleShowItems} stop={listName} />
+        <WishlistList
+          showItems={listName}
+          hideItems={handleHideItems}
+          items={items}
+          removeItem={removeItemWishList}
+        />
       </div>
     );
   }
