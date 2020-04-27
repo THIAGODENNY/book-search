@@ -74,6 +74,19 @@
   }
 }
 
+.modal__test__from__scratch {
+  background-color: red;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 10%;
+  left: 10%;
+  right: 10%;
+  bottom: 10%;
+  height: 80%;
+  width: 80%;
+}
+
 @keyframes search__moveDown {
   0% {
     opacity: 0;

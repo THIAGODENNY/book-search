@@ -16,7 +16,6 @@ import {
   getMorePages,
 } from '../../redux/actions';
 
-
 function Search() {
   const {
     data,

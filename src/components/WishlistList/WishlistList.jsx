@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Modal from 'react-modal';
+import Modal from '../Modal/Modal';
 import './WishlistList.scss';
 import Items from '../Items';
 
