@@ -51,7 +51,7 @@ const InsertItem = ({
             </div>
             <form className="insert-item__body__submit-form" onSubmit={handleSubmit}>
               <span className="insert-item__body__submit-form__title">Add to list:</span>
-              <select className="insert-item__body__submit-form__list" id="list" name="list" value={selectedListItem} onChange={handleSelectedListChange}>
+              <select className="insert-item__body__submit-form__list" id="list" name="list" value={selectedListItem} onChange={handleSelectedListChange} required>
                 {list.map((e) => <option key={e} value={e}>{e}</option>)}
               </select>
               <button type="button" className="insert-item__body__submit-form__create-list" onClick={handleCreateList}>+</button>
