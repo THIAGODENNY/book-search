@@ -1,8 +1,8 @@
 .item {
   display: grid;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  width: 20rem;
-  max-height: 120px;
+  width: 80%;
+  min-height: 120px;
   margin: 15px;
 
   &__title {
@@ -16,26 +16,27 @@
 
   &__container {
     display: grid;
-    grid-auto-columns: 25% 75%;
     grid-template-areas: "image description";
     width: 100%;
     align-items: center;
 
     &__image {
       padding: 0;
+      margin-left: 0;
       grid-area: image;
       height: 100%;
       width: 100%;
+      max-width: 85px;
     }
 
     &__description {
       display: block;
       width: 100%;
       height: 9em;
-      overflow: hidden;
+      overflow: scroll;
       white-space: wrap;
-      text-overflow: ellipsis;
-      font-size: xx-small;
+      text-overflow: scroll;
+      font-size: initial;
       padding: 0px 8px;
       grid-area: description;
       text-align: justify;

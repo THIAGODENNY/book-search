@@ -11,10 +11,8 @@ import {
   updateFilter,
   updateAllList,
   searchHandle,
-  handleFilter,
   addItemWishlist,
   onRequestClose,
-  removeItemWishList,
   getMorePages,
 } from '../../redux/actions';
 
@@ -26,7 +24,6 @@ function Search() {
     search,
     selectedOption,
     list,
-    filter,
     hasMoreItems,
   } = useSelector((state) => state);
 
@@ -76,7 +73,7 @@ function Search() {
   return (
     <div className="search">
       <div className={
-        (search || wishList.items.length > 0)
+        (search)
           ? debounceInputClasses[1]
           : debounceInputClasses[0]
       }
@@ -103,26 +100,6 @@ function Search() {
             <Items items={(() => filterData())()} addItemWishlist={addItemWishlist} />
           </InfiniteScroll>
         </div>
-        {wishList.items.length > 0
-          && (
-            <div className="search__items__wishlist">
-              <div className="search__items__wishlist__header">
-                <h1 className="search__items__wishlist__header__title">WishList</h1>
-                <select className="search__items__wishlist__header__filter" onChange={handleFilter} value={filter}>
-                  <option key="default" value="null">-- Filter --</option>
-                  {list.map((e) => <option key={e} value={e}>{e}</option>)}
-                </select>
-              </div>
-              <Items
-                items={wishList.items.filter((e) => (filter ? e.listName === filter : true))}
-                addItemWishlist={
-                  (id) => removeItemWishList(
-                    wishList.items.filter((i) => i.id !== id),
-                  )
-                }
-              />
-            </div>
-          )}
       </div>
       <SelectList
         selectedOption={selectedOption}

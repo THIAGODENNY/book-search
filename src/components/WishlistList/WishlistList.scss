@@ -1,7 +1,7 @@
 .wishlist-list {
   position: absolute;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   top: 10%;
   left: 10%;
   right: 10%;
@@ -13,7 +13,7 @@
   overflow: scroll;
   &__list {
     display: grid;
-    grid-template-columns: min-content;
+    grid-template-columns: auto;
     max-height: -webkit-fill-available;
   }
 }

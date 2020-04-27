@@ -20,7 +20,7 @@ const WishlistList = ({
         onRequestClose={hideItems}
       >
         <div className="wishlist-list__list">
-          {theseItems && theseItems
+          {showItems && theseItems
             .map((item) => <Items items={item} addItemWishlist={removeItem} />)}
         </div>
       </Modal>
