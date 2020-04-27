@@ -65,7 +65,7 @@ class WishList extends Component {
       }
     };
 
-    const items = wishList.items.sort((a, b) => {
+    const sortWishlist = (a, b) => {
       if (a.listName > b.listName) {
         return 1;
       }
@@ -73,7 +73,9 @@ class WishList extends Component {
         return -1;
       }
       return 0;
-    }).reduce((accumulator, currentElement) => {
+    };
+
+    const organizeToCommonLists = (accumulator, currentElement) => {
       const index = accumulator
         .map((e, i) => (e[0].listName === currentElement.listName ? i : -1))
         .filter((e) => e > -1).pop();
@@ -81,7 +83,11 @@ class WishList extends Component {
         return [...accumulator, [currentElement]];
       }
       return [...accumulator, [accumulator[index].push(currentElement)]];
-    }, []);
+    };
+
+    const items = wishList.items
+      .sort(sortWishlist)
+      .reduce(organizeToCommonLists, []);
 
     return (
       <div>
