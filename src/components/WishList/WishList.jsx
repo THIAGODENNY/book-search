@@ -47,8 +47,13 @@ class WishList extends Component {
       this.setState({ listName: undefined });
     };
 
-    const removeItemWishList = (id) => {
-      const removedWishlist = wishList.items.filter((i) => i.id !== id);
+    const removeItemWishList = (id, listNameToFilter) => {
+      const removedWishlist = wishList.items.filter((i) => {
+        if (id) {
+          return i.id !== id;
+        }
+        return i.listName !== listNameToFilter;
+      });
       dispatch(setWishlist({ items: removedWishlist }));
 
       const listExists = removedWishlist
@@ -80,7 +85,12 @@ class WishList extends Component {
 
     return (
       <div>
-        <Carousel items={items} showItems={handleShowItems} stop={listName} />
+        <Carousel
+          items={items}
+          showItems={handleShowItems}
+          stop={listName}
+          removeList={removeItemWishList}
+        />
         <WishlistList
           showItems={listName}
           hideItems={handleHideItems}
