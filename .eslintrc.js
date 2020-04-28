@@ -24,5 +24,6 @@ module.exports = {
     'jest'
   ],
   rules: {
+    "linebreak-style": [2, "windows"]
   },
 };
