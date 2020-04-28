@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "classnames": "^2.2.6",
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "node-sass": "^4.13.1",

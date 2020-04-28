@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
+import classNames from 'classnames';
 import Items from '../Items';
 import './Search.scss';
 import SelectList from '../SelectList';
@@ -64,17 +65,10 @@ function Search() {
     return data.items;
   };
 
-  const debounceInputClasses = [
-    'search__search',
-    'search__search--found',
-  ];
-
   return (
     <div className="search">
       <div className={
-        (search)
-          ? debounceInputClasses[1]
-          : debounceInputClasses[0]
+        classNames({ search__search: !search, 'search__search--found': search })
       }
       >
         <DebounceInput
