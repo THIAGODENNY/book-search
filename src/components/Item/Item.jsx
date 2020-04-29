@@ -15,17 +15,17 @@ const Item = ({ item, addItemWishlist }) => {
 
   return (
     <div key={id} className="item">
-      <a className="item__title" href={infoLink}>{title}</a>
-      <div className="item__container">
-        <input
-          className="item__container__image"
-          type="image"
-          src={smallThumbnail || defaultImage}
-          alt="Logo"
-          onClick={() => addItemWishlist(id)}
-        />
-        <span className="item__container__description">{description}</span>
+      <img
+        className="item__image"
+        type="image"
+        src={smallThumbnail || defaultImage}
+        alt="Logo"
+      />
+      <div className="item__content">
+        <a className="item__content__title" href={infoLink}><strong>{title}</strong></a>
+        <p className="item__content__description">{description}</p>
       </div>
+      <button type="button" className="item__button" onClick={() => addItemWishlist(id)}>Add to list</button>
     </div>
   );
 };
