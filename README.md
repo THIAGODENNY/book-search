@@ -1,10 +1,10 @@
-# React Boilerplate
+# Book Search
 
-React Boilerplate is a Ramp-up project that creates wishlists.
+Book Search is a Ramp-up project that creates wishlists.
 
 ## Installation
 
-Make you sure you have the [Node.js](http://nodejs.org/) installed and use the package manager [npm](https://www.npmjs.com/) to install React Boilerplate.
+Make you sure you have the [Node.js](http://nodejs.org/) installed and use the package manager [npm](https://www.npmjs.com/) to install Book Search.
 
 
 ```bash
