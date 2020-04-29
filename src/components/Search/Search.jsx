@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { DebounceInput } from 'react-debounce-input';
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
 import classNames from 'classnames';
 import Items from '../Items';
@@ -17,39 +18,31 @@ import {
   getMorePages,
 } from '../../redux/actions';
 
-function Search() {
-  const {
-    data,
-    wishList,
-    search,
-    selectedOption,
-    list,
-    hasMoreItems,
-  } = useSelector((state) => state);
+class Search extends React.Component {
+  componentDidMount() {
+    this.update();
+  }
 
-  useEffect(
-    () => {
-      localStorage.setItem('items', JSON.stringify(wishList.items));
-      localStorage.setItem('list', list.join(','));
+  update() {
+    const { wishList, list } = this.props;
+    const { items } = wishList;
 
-      const wishListLists = wishList.items.map((item) => item.listName);
-      const newAllList = [...new Set(wishListLists)];
+    localStorage.setItem('items', JSON.stringify(items));
+    localStorage.setItem('list', list.join(','));
 
-      if (
-        !arraysEqual(list, newAllList)
-        && !selectedOption.isOpened
-      ) {
-        updateAllList(newAllList);
-        updateFilter(null);
-      }
-    },
-  );
+    const wishListLists = items.map((item) => item.listName);
+    const newAllList = [...new Set(wishListLists)];
 
-  const handleLoadMoreItems = () => {
-    getMorePages();
-  };
+    if (
+      !arraysEqual(list, newAllList)
+    ) {
+      updateAllList(newAllList);
+      updateFilter(null);
+    }
+  }
 
-  const filterData = () => {
+  filterData() {
+    const { wishList, data, hasMoreItems } = this.props;
     const { items } = wishList;
 
     if (items.length > 0 && data.items) {
@@ -57,48 +50,75 @@ function Search() {
         (wishListItem) => item.id === wishListItem.id,
       )
         .length === 0);
-      if (data.items.length > 0 && itemsToLoad.length < 10 && hasMoreItems) {
-        handleLoadMoreItems();
+      if (items.length > 0 && itemsToLoad.length < 10 && hasMoreItems) {
+        getMorePages();
       }
       return itemsToLoad;
     }
     return data.items;
-  };
+  }
 
-  return (
-    <div className="search">
-      <div className={
-        classNames({ search__search: !search, 'search__search--found': search })
-      }
-      >
-        <DebounceInput
-          minLength={2}
-          onChange={(event) => searchHandle(event.target.value)}
-          debounceTimeout={1000}
-          className="search__search__input-search"
-          value={search}
+  render() {
+    const {
+      selectedOption, search, data, hasMoreItems,
+    } = this.props;
+    return (
+      <div className="search">
+        <div className={
+          classNames({ search__search: !search, 'search__search--found': search })
+        }
+        >
+          <DebounceInput
+            minLength={2}
+            onChange={(event) => searchHandle(event.target.value)}
+            debounceTimeout={1000}
+            className="search__search__input-search"
+            value={search}
+          />
+        </div>
+
+        <div className="search__items">
+          <div className="search__items__found">
+            {data.items.length > 0 && <h1 className="search__items__found__title">Items found</h1>}
+            <InfiniteScroll
+              initialLoad={false}
+              pageStart={0}
+              loadMore={() => getMorePages()}
+              hasMore={hasMoreItems}
+              loader={data.items.length > 0 && <div className="loader" key={0}>Loading ...</div>}
+            >
+              <Items items={(() => this.filterData())()} addItemWishlist={addItemWishlist} />
+            </InfiniteScroll>
+          </div>
+        </div>
+        <SelectList
+          selectedOption={selectedOption}
+          onRequestClose={onRequestClose}
         />
       </div>
-
-      <div className="search__items">
-        <div className="search__items__found">
-          {data.items.length > 0 && <h1 className="search__items__found__title">Items found</h1>}
-          <InfiniteScroll
-            initialLoad={false}
-            pageStart={0}
-            loadMore={() => handleLoadMoreItems()}
-            hasMore={hasMoreItems}
-            loader={data.items.length > 0 && <div className="loader" key={0}>Loading ...</div>}
-          >
-            <Items items={(() => filterData())()} addItemWishlist={addItemWishlist} />
-          </InfiniteScroll>
-        </div>
-      </div>
-      <SelectList
-        selectedOption={selectedOption}
-        onRequestClose={onRequestClose}
-      />
-    </div>
-  );
+    );
+  }
 }
-export default Search;
+
+Search.propTypes = {
+  wishList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  list: PropTypes.arrayOf(PropTypes.string).isRequired,
+  hasMoreItems: PropTypes.bool.isRequired,
+  search: PropTypes.string.isRequired,
+  selectedOption: PropTypes.shape({
+    isOpen: PropTypes.bool.isRequired,
+    id: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  data: state.data,
+  wishList: state.wishList,
+  search: state.search,
+  selectedOption: state.selectedOption,
+  list: state.list,
+  hasMoreItems: state.hasMoreItems,
+});
+
+export default connect(mapStateToProps)(Search);
