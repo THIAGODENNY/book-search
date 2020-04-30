@@ -1,4 +1,4 @@
-# Book Search
+# Book Search &middot; [![Netlify Status](https://api.netlify.com/api/v1/badges/f20f6d0c-e856-4f6b-ac6d-567807506002/deploy-status)](https://app.netlify.com/sites/admiring-darwin-7054c1/deploys)
 
 Book Search is a Ramp-up project that creates wishlists, hosted [here](https://5ea9ebacdb0c250229e8adef--admiring-darwin-7054c1.netlify.app/).
 
