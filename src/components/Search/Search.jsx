@@ -18,7 +18,7 @@ import {
   getMorePages,
 } from '../../redux/actions';
 
-class Search extends React.Component {
+class Search extends React.PureComponent {
   componentDidMount() {
     this.update();
   }

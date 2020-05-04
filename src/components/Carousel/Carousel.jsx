@@ -6,29 +6,21 @@ import Modal from 'react-modal';
 const Carousel = ({
   items, showItems, stop, removeList,
 }) => {
+  const [urls, setUrls] = useState(items);
   const [imgNumber, setImgNumber] = useState(0);
   const [focus, setFocus] = useState(false);
   const [deleteListOpened, setDeleteListOpened] = useState(false);
 
-  const urls = items;
-  const styles = {
-    backgroundImage: `url(${urls[imgNumber].volumeInfo.imageLinks.smallThumbnail})`,
-    backgroundRepeat: 'repeat',
-    backgroundSize: 'auto',
-  };
-
   const previousImage = () => {
-    if (imgNumber === 0) {
-      return setImgNumber((urls.length - 1));
-    }
-    return setImgNumber(imgNumber - 1);
+    const newUrls = urls;
+    newUrls.unshift(newUrls.pop());
+    setUrls(() => [...newUrls]);
   };
 
   const nextImage = () => {
-    if (imgNumber === ((urls.length - 1))) {
-      return setImgNumber(0);
-    }
-    return setImgNumber(imgNumber + 1);
+    const newUrls = urls;
+    newUrls.push(newUrls.shift());
+    setUrls(() => [...newUrls]);
   };
 
   const deleteListOpen = () => setDeleteListOpened(true);
@@ -36,10 +28,10 @@ const Carousel = ({
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!focus && !stop) {
+      if (!focus && !stop && urls.length > 3) {
         nextImage();
       }
-    }, 5000);
+    }, 1000);
     return () => clearInterval(interval);
   }, [nextImage]);
 
@@ -67,12 +59,26 @@ const Carousel = ({
         >
           X
         </button>
-        <h1 className="carousel__header__title">{urls[imgNumber].listName}</h1>
+        <h1 className="carousel__header__title">{urls[0].listName}</h1>
       </div>
       <div className="carousel" onMouseEnter={() => setFocus(true)} onMouseLeave={() => setFocus(false)}>
-        <input type="button" className="carousel__back" onClick={previousImage} />
-        <input type="button" className="carousel__image" style={styles} onClick={() => showItems(urls[imgNumber].listName)} />
-        <input type="button" className="carousel__next" onClick={nextImage} />
+        <div>
+          <input type="button" className="carousel__back" onClick={previousImage} />
+          {urls
+            .slice(0, 3)
+            .map(
+              (url) => (
+                <input
+                  type="image"
+                  className="carousel__image"
+                  src={url.volumeInfo.imageLinks.smallThumbnail}
+                  onClick={() => showItems(url.listName)}
+                  alt="logo"
+                />
+              ),
+            )}
+          <input type="button" className="carousel__next" onClick={nextImage} />
+        </div>
       </div>
       <Modal
         className="carousel__confirmation"

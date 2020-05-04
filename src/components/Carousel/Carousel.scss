@@ -24,14 +24,13 @@
     }
   }
   &__image {
-    min-width: 800px;
-    min-height: 600px;
+    min-height: 400px;
     overflow: hidden;
     margin: 0;
   }
   &__back {
     background-color: rgba(0, 0, 0, 0.5);
-    height: 600px;
+    height: 400px;
     color: white;
     width: 35px;
     transform: translateX(35px);
@@ -39,7 +38,7 @@
   }
   &__next {
     background-color: rgba(0, 0, 0, 0.5);
-    height: 600px;
+    height: 400px;
     color: white;
     width: 35px;
     transform: translateX(-35px);
