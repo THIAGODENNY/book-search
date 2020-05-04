@@ -27,7 +27,6 @@ class Search extends React.Component {
     const { wishList, list } = this.props;
     const { items } = wishList;
 
-    localStorage.setItem('items', JSON.stringify(items));
     localStorage.setItem('list', list.join(','));
 
     const wishListLists = items.map((item) => item.listName);

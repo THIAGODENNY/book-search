@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './WishList.scss';
-import { updateFilter, updateAllList } from '../../redux/actions';
+import { updateFilter, updateAllList, updateWishList } from '../../redux/actions';
 import arraysEqual from '../../../tools/arraysEqual';
 import Carousel from '../Carousel';
 import WishlistList from '../WishlistList/WishlistList';
@@ -21,7 +21,6 @@ class WishList extends Component {
       list,
     } = this.props;
 
-    localStorage.setItem('items', JSON.stringify(wishList.items));
     localStorage.setItem('list', list.join(','));
 
     const wishListLists = wishList.items.map((item) => item.listName);
@@ -34,10 +33,8 @@ class WishList extends Component {
   }
 
   render() {
-    const { wishList, dispatch } = this.props;
+    const { wishList } = this.props;
     const { listName } = this.state;
-
-    const setWishlist = (newWishList) => ({ type: 'SET_WISHLIST', wishList: newWishList });
 
     const handleShowItems = (list) => {
       this.setState({ listName: list });
@@ -54,7 +51,7 @@ class WishList extends Component {
         }
         return i.listName !== listNameToFilter;
       });
-      dispatch(setWishlist({ items: removedWishlist }));
+      updateWishList({ items: removedWishlist });
 
       const listExists = removedWishlist
         .filter((list) => list.listName === listName)
@@ -87,16 +84,21 @@ class WishList extends Component {
 
     const items = wishList.items
       .sort(sortWishlist)
-      .reduce(organizeToCommonLists, []);
+      .reduce(organizeToCommonLists, [])
+      .filter(
+        (item) => item[0].id !== undefined,
+      );
 
     return (
       <div>
-        <Carousel
-          items={items}
-          showItems={handleShowItems}
-          stop={listName}
-          removeList={removeItemWishList}
-        />
+        {items && items.map((item) => (
+          <Carousel
+            items={item}
+            showItems={handleShowItems}
+            stop={listName}
+            removeList={removeItemWishList}
+          />
+        ))}
         <WishlistList
           showItems={listName}
           hideItems={handleHideItems}
@@ -117,14 +119,11 @@ WishList.propTypes = {
   list: PropTypes.arrayOf(
     PropTypes.string,
   ).isRequired,
-  dispatch: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => (
-  {
-    wishList: state.wishList,
-    list: state.list,
-  }
-);
+const mapStateToProps = (state) => ({
+  wishList: state.wishList,
+  list: state.list,
+});
 
 export default connect(mapStateToProps)(WishList);

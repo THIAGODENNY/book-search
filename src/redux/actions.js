@@ -15,7 +15,10 @@ const setHasMoreItems = () => ({ type: 'SET_HAS_MORE_ITEMS' });
 const resetHasMoreItems = () => ({ type: 'RESET_HAS_MORE_ITEMS' });
 
 export const updateItemsData = (item) => store.dispatch(setData(item));
-export const updateWishList = (item) => store.dispatch(setWishList(item));
+export const updateWishList = (item) => {
+  localStorage.setItem('items', JSON.stringify(item.items));
+  store.dispatch(setWishList(item));
+};
 export const updateSearch = (item) => store.dispatch(setSearch(item));
 export const updateSelectedOption = (option) => store.dispatch(setSelectedOption(option));
 export const updateFilter = (filter) => store.dispatch(setFilter(filter));

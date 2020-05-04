@@ -10,12 +10,9 @@ const Carousel = ({
   const [focus, setFocus] = useState(false);
   const [deleteListOpened, setDeleteListOpened] = useState(false);
 
-  const urls = items.filter(
-    (item) => item[0].id !== undefined,
-  );
-
+  const urls = items;
   const styles = {
-    backgroundImage: urls[imgNumber] && urls[imgNumber].map((item) => `url(${item.volumeInfo.imageLinks.smallThumbnail})`).join(','),
+    backgroundImage: `url(${urls[imgNumber].volumeInfo.imageLinks.smallThumbnail})`,
     backgroundRepeat: 'repeat',
     backgroundSize: 'auto',
   };
@@ -55,6 +52,11 @@ const Carousel = ({
     return <div className="carousel__container" />;
   }
 
+  const handleRemoveList = () => {
+    deleteListClose();
+    removeList(null, urls[imgNumber].listName);
+  };
+
   return (
     <div className="carousel__container">
       <div className="carousel__header">
@@ -65,11 +67,11 @@ const Carousel = ({
         >
           X
         </button>
-        <h1 className="carousel__header__title">{urls[imgNumber][0].listName}</h1>
+        <h1 className="carousel__header__title">{urls[imgNumber].listName}</h1>
       </div>
       <div className="carousel" onMouseEnter={() => setFocus(true)} onMouseLeave={() => setFocus(false)}>
         <input type="button" className="carousel__back" onClick={previousImage} />
-        <input type="button" className="carousel__image" style={styles} onClick={() => showItems(urls[imgNumber][0].listName)} />
+        <input type="button" className="carousel__image" style={styles} onClick={() => showItems(urls[imgNumber].listName)} />
         <input type="button" className="carousel__next" onClick={nextImage} />
       </div>
       <Modal
@@ -77,15 +79,15 @@ const Carousel = ({
         isOpen={deleteListOpened}
         onRequestClose={deleteListClose}
       >
-        <form className="carousel__confirmation__submit-form" onSubmit={() => removeList(null, urls[imgNumber][0].listName)}>
+        <form className="carousel__confirmation__submit-form" onSubmit={handleRemoveList}>
           <p>
             Write (
             <strong className="carousel__confirmation__word">
-              {urls[imgNumber][0].listName}
+              {urls[imgNumber].listName}
             </strong>
             ) to delete:
           </p>
-          <input type="text" name="list" pattern={`(${urls[imgNumber][0].listName})`} required />
+          <input type="text" name="list" pattern={`(${urls[imgNumber].listName})`} required />
           <input className="carousel__confirmation__submit-form__submit" type="submit" />
         </form>
       </Modal>
