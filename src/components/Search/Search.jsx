@@ -78,16 +78,21 @@ class Search extends React.PureComponent {
 
         <div className="search__items">
           <div className="search__items__found">
-            {data.items.length > 0 && <h1 className="search__items__found__title">Items found</h1>}
-            <InfiniteScroll
-              initialLoad={false}
-              pageStart={0}
-              loadMore={() => getMorePages()}
-              hasMore={hasMoreItems}
-              loader={data.items.length > 0 && <div className="loader" key={0}>Loading ...</div>}
-            >
-              <Items items={(() => this.filterData())()} addItemWishlist={addItemWishlist} />
-            </InfiniteScroll>
+            {search
+              && (
+                <div>
+                  {data.items.length > 0 && <h1 className="search__items__found__title">Items found</h1>}
+                  <InfiniteScroll
+                    initialLoad={false}
+                    pageStart={0}
+                    loadMore={() => getMorePages()}
+                    hasMore={hasMoreItems}
+                    loader={data.items.length > 0 && <div className="loader" key={0}>Loading ...</div>}
+                  >
+                    <Items items={(() => this.filterData())()} addItemWishlist={addItemWishlist} />
+                  </InfiniteScroll>
+                </div>
+              )}
           </div>
         </div>
         <SelectList
