@@ -35,6 +35,10 @@ const Carousel = ({
     return () => clearInterval(interval);
   }, [nextImage]);
 
+  useEffect(() => {
+    setUrls(() => [...items]);
+  }, [items]);
+
   if (!urls[imgNumber] && imgNumber !== 0) {
     setImgNumber(0);
     return <div className="carousel__container" />;
@@ -62,8 +66,8 @@ const Carousel = ({
         <h1 className="carousel__header__title">{urls[0].listName}</h1>
       </div>
       <div className="carousel" onMouseEnter={() => setFocus(true)} onMouseLeave={() => setFocus(false)}>
-        <div>
-          <input type="button" className="carousel__back" onClick={previousImage} />
+        <div className="carousel__items">
+          {urls.length > 3 && <input type="button" className="carousel__back" onClick={previousImage} />}
           {urls
             .slice(0, 3)
             .map(
@@ -72,12 +76,12 @@ const Carousel = ({
                   type="image"
                   className="carousel__image"
                   src={url.volumeInfo.imageLinks.smallThumbnail}
-                  onClick={() => showItems(url.listName)}
+                  onClick={() => showItems(url.id)}
                   alt="logo"
                 />
               ),
             )}
-          <input type="button" className="carousel__next" onClick={nextImage} />
+          {urls.length > 3 && <input type="button" className="carousel__next" onClick={nextImage} />}
         </div>
       </div>
       <Modal

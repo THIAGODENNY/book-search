@@ -1,0 +1,143 @@
+.show-item {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 10%;
+  left: 10%;
+  right: 10%;
+  bottom: 10%;
+  height: 80%;
+  width: 80%;
+  background-color: white;
+  border: 1px solid blue;
+  &__body {
+    display: grid;
+    grid-template-columns: 88% 12%;
+    grid-template-rows: 35% 45% 20%;
+    grid-template-areas: 
+      "description image"
+      "description info"
+      "description submit";
+    width: 100%;
+    height: 100%;
+    &__description {
+      grid-area: description;
+      display: grid;
+      grid-template-rows: 15% 5% 80%;
+      grid-template-areas:
+        "title"
+        "authors"
+        "description";
+      width: 100%;
+      &__title {
+        grid-area: title;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        text-transform: uppercase;
+        font-size: xx-large;
+        overflow: auto;
+      }
+      &__authors {
+        grid-area: authors;
+        width: 100%;
+        height: 100%;
+        padding: 2px;
+        text-transform: uppercase;
+        font-size: large;
+        text-align: center;
+        overflow: auto;
+      }
+      &__description {
+        grid-area: description;
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+        padding-right: 20px;
+        font-size: large;
+        text-align: justify;
+        overflow: auto;
+      }
+    }
+    &__submit-form {
+      grid-area: submit;
+      display: grid;
+      grid-template-rows: 30% 30% 40%;
+      grid-template-columns: 80% 20%;
+      grid-template-areas: 
+        "title title"
+        "list create-list"
+        "submit submit";
+      background-color: white;
+      height: 100%;
+      width: 100%;
+      
+      &__title {
+        display: inline-block;
+        grid-area: title;
+        font-size: 1vw;
+        text-transform: uppercase;
+        margin: 2px;
+        margin-top: 10px;
+      }
+      &__list {
+        display: inline-block;
+        grid-area: list;
+        height: 100%;
+        width: 100%;
+        max-height: 90%;
+        max-width: 100%;
+      }
+      &__create-list {
+        display: inline-block;
+        grid-area: create-list;
+        height: 100%;
+        width: 100%;
+        max-height: 90%;
+        max-width: 100%;
+      }
+      &__submit {
+        display: inline-block;
+        grid-area: submit;
+        color: white;
+        background-color: gray;
+        height: 95%;
+        width: 100%;
+        max-height: 95%;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+      &__submit:hover {
+        background-color: rgb(90, 90, 90);
+        transform: translateY(-1px);
+      }
+    }
+    &__image {
+      grid-area: image;
+      background-color: blue;
+      height: 100%;
+      width: 100%;
+    }
+    &__info {
+      grid-area: info;
+      grid-auto-rows: min-content;
+      display: grid;
+      height: 100%;
+      width: 100%;
+      &__categories{
+        display: inline-block;
+      }
+      &__pages {
+        display: inline-block;
+      }
+      &__rating {
+        display: inline-block;
+      }
+      &__language {
+        display: inline-block;
+      }
+    }
+  }
+}
