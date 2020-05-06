@@ -16,3 +16,12 @@
     border-radius: 4px;
   }
 }
+
+.header :hover {
+  font-weight: bold;
+  transform: scale(1.1);
+}
+
+.active {
+  font-weight: bold;
+}
