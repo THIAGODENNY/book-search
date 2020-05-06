@@ -70,9 +70,6 @@ const Carousel = ({
     carouselSize = 1;
   }
 
-  useEffect(() => {
-  }, [window.innerWidth]);
-
   return (
     <div className="carousel__container">
       <div className="carousel__header">

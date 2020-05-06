@@ -38,10 +38,12 @@ class WishList extends Component {
 
     const handleShowItems = (list) => {
       this.setState({ listName: list });
+      document.body.style.overflow = 'hidden';
     };
 
     const handleHideItems = () => {
       this.setState({ listName: undefined });
+      document.body.style.overflow = 'unset';
     };
 
     const removeItemWishList = (id, listNameToFilter) => {
