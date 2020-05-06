@@ -1,5 +1,7 @@
 .carousel__container {
   display: grid;
+  background-color: rgba(0, 0, 0, 0.1);
+  width: 880px;
 }
 
 .carousel {
@@ -11,11 +13,11 @@
   margin: 0;
   &__header {
     display: flex;
+    background-color: rgba(0, 0, 0, 0.1);
     &__title {
       margin-bottom: 0 ;
       padding-bottom: 0;
       min-height: 16px;
-      background-color: white;
     }
     &__remove {
       margin-right: 5px;
@@ -31,22 +33,26 @@
     width: 270px;
     overflow: hidden;
     margin: 0;
+    transform: translateX(-35px);
+    z-index: 0;
   }
   &__back {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.1);
     height: 400px;
     color: white;
-    width: 35px;
-    transform: translateX(35px);
+    width: 70px;
+    transform: translateX(0px);
     margin: 0;
+    z-index: 1;
   }
   &__next {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.1);
     height: 400px;
     color: white;
-    width: 35px;
-    transform: translateX(-35px);
+    width: 70px;
+    transform: translateX(-70px);
     margin: 0;
+    z-index: 1;
   }
   &__confirmation {
     position: absolute;

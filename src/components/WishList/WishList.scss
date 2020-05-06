@@ -1,15 +1,3 @@
 .wishlist {
-  display: inline-flex;
-  flex-direction: 0;
-  align-items: flex-start;
-
-  &__items {
-    &__title {
-      font-size: x-large;
-      text-align: initial;
-      margin: 15px;
-      margin-top: 10px;
-      margin-bottom: 0;
-    }
-  }
+  display: grid;
 }

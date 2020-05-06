@@ -13,14 +13,20 @@ const Carousel = ({
 
   const previousImage = () => {
     const newUrls = urls;
+    if (urls.length <= 3) {
+      return setUrls(() => [...newUrls]);
+    }
     newUrls.unshift(newUrls.pop());
-    setUrls(() => [...newUrls]);
+    return setUrls(() => [...newUrls]);
   };
 
   const nextImage = () => {
     const newUrls = urls;
+    if (urls.length <= 3) {
+      return setUrls(() => [...newUrls]);
+    }
     newUrls.push(newUrls.shift());
-    setUrls(() => [...newUrls]);
+    return setUrls(() => [...urls]);
   };
 
   const deleteListOpen = () => setDeleteListOpened(true);
@@ -28,7 +34,7 @@ const Carousel = ({
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!focus && !stop && urls.length > 3) {
+      if (!focus && !stop) {
         nextImage();
       }
     }, 1000);
@@ -53,6 +59,20 @@ const Carousel = ({
     removeList(null, urls[imgNumber].listName);
   };
 
+  let carouselSize;
+  if (window.innerWidth >= 1000) {
+    carouselSize = 3;
+  }
+  if (window.innerWidth < 1000) {
+    carouselSize = 2;
+  }
+  if (window.innerWidth < 800) {
+    carouselSize = 1;
+  }
+
+  useEffect(() => {
+  }, [window.innerWidth]);
+
   return (
     <div className="carousel__container">
       <div className="carousel__header">
@@ -67,9 +87,9 @@ const Carousel = ({
       </div>
       <div className="carousel" onMouseEnter={() => setFocus(true)} onMouseLeave={() => setFocus(false)}>
         <div className="carousel__items">
-          {urls.length > 3 && <input type="button" className="carousel__back" onClick={previousImage} />}
+          {urls.length >= carouselSize && <input type="button" className="carousel__back" onClick={previousImage} value="<" />}
           {urls
-            .slice(0, 3)
+            .slice(0, carouselSize)
             .map(
               (url) => (
                 <input
@@ -81,7 +101,7 @@ const Carousel = ({
                 />
               ),
             )}
-          {urls.length > 3 && <input type="button" className="carousel__next" onClick={nextImage} />}
+          {urls.length >= carouselSize && <input type="button" className="carousel__next" onClick={nextImage} value=">" />}
         </div>
       </div>
       <Modal

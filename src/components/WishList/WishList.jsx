@@ -90,7 +90,7 @@ class WishList extends Component {
       );
 
     return (
-      <div>
+      <div className="wishlist">
         {items && items.map((item) => (
           <Carousel
             items={item}

@@ -33,13 +33,9 @@ const ShowItem = ({
           {item.volumeInfo.language}
         </span>
       </div>
-      {
-        true && (
-          <form className="show-item__body__submit-form" onSubmit={handleDelete}>
-            <input className="show-item__body__submit-form__submit" type="submit" value="Delete" />
-          </form>
-        )
-      }
+      <form className="show-item__body__submit-form" onSubmit={handleDelete}>
+        <input className="show-item__body__submit-form__submit" type="submit" value="Delete" />
+      </form>
     </div>
   );
 };

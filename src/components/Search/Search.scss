@@ -1,21 +1,28 @@
 .search {
-  &__search {
+  width: 100%;
+  &__search { 
     grid-area: search-grid;
     margin-top: 40vh;
-
     height: 50px;
-    width: 40%;
     left: 50%;
+
+    width: 40%;
+    @media (max-width: 850px) {
+      width: 60%;
+    }
   
     animation-name: search__moveDown;
     animation-duration: 600ms;
 
     &--found {
       margin-top: 5vh;
-
-      height: 50px;
-      width: 40%;
+      height: 50px; 
       left: 50%;
+
+      width: 40%;
+      @media (max-width: 850px) {
+        width: 60%;
+      }
     }
 
     &__input-search {
