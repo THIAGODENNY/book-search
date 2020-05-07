@@ -1,7 +1,7 @@
 {
-  "name": "react-boilerplate",
+  "name": "book-search",
   "version": "1.0.0",
-  "description": "React Boilerplate is Ramp-up project that creates wishlists",
+  "description": "Book Search is Ramp-up project that creates wishlists",
   "main": "index.js",
   "author": "Thiago Denny",
   "license": "MIT",
