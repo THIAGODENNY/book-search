@@ -84,7 +84,7 @@ const Carousel = ({
       </div>
       <div className="carousel" onMouseEnter={() => setFocus(true)} onMouseLeave={() => setFocus(false)}>
         <div className="carousel__items">
-          {urls.length >= carouselSize && <input type="button" className="carousel__back" onClick={previousImage} value="<" />}
+          <input type="button" className="carousel__back" onClick={previousImage} value="<" />
           {urls
             .slice(0, carouselSize)
             .map(
@@ -98,7 +98,7 @@ const Carousel = ({
                 />
               ),
             )}
-          {urls.length >= carouselSize && <input type="button" className="carousel__next" onClick={nextImage} value=">" />}
+          <input type="button" className={`carousel__next ${(urls.length >= 3 && carouselSize > 2) && 'carousel__next--full'}`} onClick={nextImage} value=">" />
         </div>
       </div>
       <Modal

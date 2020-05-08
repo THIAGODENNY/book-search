@@ -14,6 +14,7 @@
   &__header {
     display: flex;
     background-color: rgba(0, 0, 0, 0.1);
+    max-width: 880px;
     &__title {
       margin-bottom: 0 ;
       padding-bottom: 0;
@@ -44,15 +45,19 @@
     transform: translateX(0px);
     margin: 0;
     z-index: 1;
+    margin-right: auto;
   }
   &__next {
     background-color: rgba(0, 0, 0, 0.1);
     height: 400px;
     color: white;
     width: 70px;
-    transform: translateX(-70px);
+    &--full {
+      transform: translateX(-70px);
+    }
     margin: 0;
     z-index: 1;
+    margin-left: auto;
   }
   &__confirmation {
     position: absolute;
