@@ -4,11 +4,11 @@ import './Carousel.scss';
 import Modal from 'react-modal';
 
 const Carousel = ({
-  items, showItems, stop, removeList,
+  items, showItems, removeList,
 }) => {
   const [urls, setUrls] = useState(items);
   const [imgNumber, setImgNumber] = useState(0);
-  const [focus, setFocus] = useState(false);
+  const [width, setWidth] = useState(window.innerWidth);
   const [deleteListOpened, setDeleteListOpened] = useState(false);
 
   const previousImage = () => {
@@ -33,13 +33,8 @@ const Carousel = ({
   const deleteListClose = () => setDeleteListOpened(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (!focus && !stop) {
-        nextImage();
-      }
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [nextImage]);
+    window.addEventListener('resize', () => setWidth(() => window.innerWidth));
+  }, []);
 
   useEffect(() => {
     setUrls(() => [...items]);
@@ -60,13 +55,13 @@ const Carousel = ({
   };
 
   let carouselSize;
-  if (window.innerWidth >= 1000) {
+  if (width >= 1000) {
     carouselSize = 3;
   }
-  if (window.innerWidth < 1000) {
+  if (width < 1000) {
     carouselSize = 2;
   }
-  if (window.innerWidth < 800) {
+  if (width < 800) {
     carouselSize = 1;
   }
 
@@ -82,7 +77,7 @@ const Carousel = ({
         </button>
         <h1 className="carousel__header__title">{urls[0].listName}</h1>
       </div>
-      <div className="carousel" onMouseEnter={() => setFocus(true)} onMouseLeave={() => setFocus(false)}>
+      <div className="carousel">
         <div className="carousel__items">
           <input type="button" className="carousel__back" onClick={previousImage} value="<" />
           {urls
@@ -125,7 +120,6 @@ const Carousel = ({
 Carousel.propTypes = {
   items: Proptypes.arrayOf(Proptypes.object).isRequired,
   showItems: Proptypes.string.isRequired,
-  stop: Proptypes.string.isRequired,
   removeList: Proptypes.func.isRequired,
 };
 
