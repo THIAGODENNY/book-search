@@ -1,6 +1,6 @@
 .carousel__container {
   display: grid;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: gray;
   width: 880px;
 }
 
@@ -15,15 +15,19 @@
     display: flex;
     background-color: rgba(0, 0, 0, 0.1);
     max-width: 880px;
+    margin-left: 0;
     &__title {
       margin-bottom: 0 ;
       padding-bottom: 0;
       min-height: 16px;
+      color: white;
+      font-size: medium;
     }
     &__remove {
       margin-right: 5px;
       background-color: gray;
       color: white;
+      font-size: medium;
     }
   }
   &__items {
@@ -38,7 +42,7 @@
     z-index: 0;
   }
   &__back {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0);
     height: 400px;
     color: white;
     width: 70px;
@@ -46,9 +50,11 @@
     margin: 0;
     z-index: 1;
     margin-right: auto;
+    font-size: xx-large;
+    border-style: hidden;
   }
   &__next {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0);
     height: 400px;
     color: white;
     width: 70px;
@@ -58,6 +64,8 @@
     margin: 0;
     z-index: 1;
     margin-left: auto;
+    font-size: xx-large;
+    border-style: hidden;
   }
   &__confirmation {
     position: absolute;
