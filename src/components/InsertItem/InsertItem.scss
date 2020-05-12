@@ -142,3 +142,40 @@
     }
   }
 }
+
+@media (max-width: 1000px) {
+  .insert-item{
+    &__body {
+      display: grid;
+      overflow: hidden;
+      @media (max-height: 550px ) {
+        overflow: scroll;
+      }
+      width: 205px;
+      grid-template-rows: 250px auto 200px 80px;
+      grid-template-columns: 100%;
+      grid-template-areas: 
+        "image"
+        "info"
+        "description"
+        "submit";
+      &__description {
+        grid-template-rows: auto;
+        &__title {
+          font-size: small;
+        }
+        &__authors {
+          font-size: x-small;
+        }
+        &__description {
+          font-size: x-small;
+        }
+      }
+      &__submit-form {
+        &__title {
+          display: none;
+        }
+      }
+    }
+  }
+}
