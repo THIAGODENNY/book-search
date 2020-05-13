@@ -13,18 +13,12 @@ const Carousel = ({
 
   const previousImage = () => {
     const newUrls = urls;
-    if (urls.length <= 3) {
-      return setUrls(() => [...newUrls]);
-    }
     newUrls.unshift(newUrls.pop());
     return setUrls(() => [...newUrls]);
   };
 
   const nextImage = () => {
     const newUrls = urls;
-    if (urls.length <= 3) {
-      return setUrls(() => [...newUrls]);
-    }
     newUrls.push(newUrls.shift());
     return setUrls(() => [...urls]);
   };
