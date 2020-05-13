@@ -80,7 +80,7 @@ const Carousel = ({
               (url) => (
                 <input
                   type="image"
-                  className="carousel__image"
+                  className={`carousel__image ${carouselSize >= 3 && 'carousel__image--all-images'}`}
                   src={url.volumeInfo.imageLinks.smallThumbnail}
                   onClick={() => showItems(url.id)}
                   alt="logo"

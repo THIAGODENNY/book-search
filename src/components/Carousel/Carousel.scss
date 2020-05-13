@@ -4,6 +4,24 @@
   width: 880px;
 }
 
+@media (max-width: 900px) {
+  .carousel__container {
+    width: 700px;
+  }
+}
+
+@media (max-width: 800px) {
+  .carousel__container {
+    width: 600px;
+  }
+}
+
+@media (max-width: 600px) {
+  .carousel__container {
+    width: 400px;
+  }
+}
+
 .carousel {
   font-family: sans-serif;
   text-align: center;
@@ -38,7 +56,9 @@
     width: 270px;
     overflow: hidden;
     margin: 0;
-    transform: translateX(-35px);
+    &--all-images {
+      transform: translateX(-35px);
+    }
     z-index: 0;
   }
   &__back {
