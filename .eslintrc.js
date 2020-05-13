@@ -24,5 +24,7 @@ module.exports = {
     'jest'
   ],
   rules: {
+    "linebreak-style": 0,
+    "global-require": 0 
   },
 };

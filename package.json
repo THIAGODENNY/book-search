@@ -1,28 +1,32 @@
 {
-  "name": "react-boilerplate",
+  "name": "book-search",
   "version": "1.0.0",
-  "description": "React Boilerplate is Ramp-up project that creates wishlists",
+  "description": "Book Search is Ramp-up project that creates wishlists",
   "main": "index.js",
   "author": "Thiago Denny",
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js --optimize-minimize",
-    "test": "jest --config=jest.eslint.config.json && jest --config=jest.test.config.json"
+    "test": "jest --config=jest.test.config.json"
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "classnames": "^2.2.6",
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "node-sass": "^4.13.1",
     "prop-types": "^15.7.2",
-    "react": "^16.4.0-0",
+    "react": "^16.13.1",
     "react-debounce-input": "^3.2.2",
     "react-dom": "^16.13.1",
+    "react-infinite-scroller": "^1.2.4",
     "react-modal": "^3.11.2",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
     "sass-loader": "^8.0.2"
   },
   "devDependencies": {
@@ -49,7 +53,7 @@
     "html-webpack-plugin": "^4.0.3",
     "husky": "^4.2.3",
     "jest": "^21.2.1",
-    "jest-runner-eslint": "^0.7.6",
+    "lint-staged": "^10.1.3",
     "raf": "^3.3.2",
     "style-loader": "^1.1.3",
     "webpack": "^4.42.1",
@@ -60,7 +64,13 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test"
+      "pre-commit": "npm test && lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }
