@@ -46,17 +46,19 @@ Item.propTypes = {
   imageLinks: PropTypes.shape({
     smallThumbnail: PropTypes.string,
   }),
-  addItemWishlist: PropTypes.func.isRequired,
+  addItemWishlist: PropTypes.func,
 };
 
 Item.defaultProps = {
   volumeInfo: undefined,
   imageLinks: undefined,
   item: {
+    id: '0',
     volumeInfo: {
-      smallThumbnail: undefined,
+      smallThumbnail: defaultImage,
     },
   },
+  addItemWishlist: () => null,
 };
 
 export default Item;
