@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Item from './Item';
+import logoImage from '../../assets/No-Image-Available.png';
 
 const setup = (item, addItemWishlist) => shallow(
   <Item
@@ -15,12 +16,27 @@ test('render without error', () => {
   expect(item.length).toBe(1);
 });
 
+describe('Item image should render correctly', () => {
+  test('renders item__image', () => {
+    const wrapper = setup();
+    const itemImage = wrapper.find('[className="item__image"]');
+    expect(itemImage.length).toBe(1);
+  });
+
+  test('renders no-image in item__image when has no image', () => {
+    const wrapper = setup();
+    const itemImage = wrapper.find('[className="item__image"]');
+    expect(itemImage.find('img').prop('src')).toEqual(logoImage);
+  });
+});
+
 describe('Item content should render correcly', () => {
   test('renders item__content', () => {
     const wrapper = setup();
     const itemContent = wrapper.find('[className="item__content"]');
     expect(itemContent.length).toBe(1);
   });
+
   test('renders title and description', () => {
     const wrapper = setup();
     const itemContent = wrapper.find('[className="item__content"]');
@@ -59,6 +75,7 @@ describe('Item description should render correctly', () => {
     const itemContentDescription = wrapper.find('[className="item__content__description"]');
     expect(itemContentDescription.length).toBe(1);
   });
+
   test('renders description in item__content__description', () => {
     const randomDescription = Math.random().toString();
     const item = {
