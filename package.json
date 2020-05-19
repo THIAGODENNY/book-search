@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js --optimize-minimize",
+    "build": "npm test && webpack --config webpack.prod.js --optimize-minimize",
     "test": "jest --config=jest.test.config.json"
   },
   "dependencies": {
