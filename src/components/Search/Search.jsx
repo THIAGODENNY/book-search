@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { object } from 'prop-types';
 import { DebounceInput } from 'react-debounce-input';
 import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -18,7 +18,7 @@ import {
   getMorePages,
 } from '../../redux/actions';
 
-class Search extends React.PureComponent {
+export class Search extends React.PureComponent {
   componentDidMount() {
     this.update();
   }
@@ -105,7 +105,9 @@ class Search extends React.PureComponent {
 }
 
 Search.propTypes = {
-  wishList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  wishList: PropTypes.shape({
+    items: PropTypes.arrayOf(object).isRequired,
+  }).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   list: PropTypes.arrayOf(PropTypes.string).isRequired,
   hasMoreItems: PropTypes.bool.isRequired,
@@ -114,6 +116,13 @@ Search.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     id: PropTypes.string.isRequired,
   }).isRequired,
+};
+
+Search.defaults = {
+  selectedOption: {
+    isOpen: false,
+    id: '',
+  },
 };
 
 const mapStateToProps = (state) => ({

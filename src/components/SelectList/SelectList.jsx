@@ -81,13 +81,18 @@ const SelectList = ({ selectedOption, onRequestClose }) => {
 };
 
 SelectList.propTypes = {
-  selectedOption: PropTypes.arrayOf(
-    PropTypes.shape({
-      isOpened: PropTypes.bool.isRequired,
-      id: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  selectedOption: PropTypes.shape({
+    isOpened: PropTypes.bool,
+    id: PropTypes.string,
+  }).isRequired,
   onRequestClose: PropTypes.func.isRequired,
+};
+
+SelectList.defaults = {
+  selectedOption: {
+    isOpened: false,
+    id: '',
+  },
 };
 
 export default SelectList;
