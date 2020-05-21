@@ -18,7 +18,7 @@ import {
   getMorePages,
 } from '../../redux/actions';
 
-export class Search extends React.PureComponent {
+class Search extends React.PureComponent {
   componentDidMount() {
     this.update();
   }
@@ -108,7 +108,9 @@ Search.propTypes = {
   wishList: PropTypes.shape({
     items: PropTypes.arrayOf(object).isRequired,
   }).isRequired,
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.shape({
+    items: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
   list: PropTypes.arrayOf(PropTypes.string).isRequired,
   hasMoreItems: PropTypes.bool.isRequired,
   search: PropTypes.string.isRequired,
