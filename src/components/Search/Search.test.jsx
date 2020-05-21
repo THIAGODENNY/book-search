@@ -50,4 +50,58 @@ describe('Search should render correctly ', () => {
     const itemSearch = component.find('[className="search__search__input-search"]');
     expect(itemSearch.length).toBe(1);
   });
+
+  test('render search__items component', () => {
+    const component = setup();
+    const itemSearch = component.find('[className="search__items"]');
+    expect(itemSearch.length).toBe(1);
+  });
+
+  test('render search__items__found component', () => {
+    const component = setup();
+    const itemSearch = component.find('[className="search__items__found"]');
+    expect(itemSearch.length).toBe(1);
+  });
+
+  test('not render search__items__found__title when search is empty', () => {
+    const component = setup({ search: '', data: { items: [{ id: 'fooBar' }] } });
+    const itemSearch = component.find('[className="search__items__found__title"]');
+    expect(itemSearch.length).toBe(0);
+  });
+
+  test('not render search__items__found__title when data.items is empty', () => {
+    const component = setup({ search: 'fooBar', data: { items: [] } });
+    const itemSearch = component.find('[className="search__items__found__title"]');
+    expect(itemSearch.length).toBe(0);
+  });
+
+  test('not render search__items__found__title when search and data.items is empty', () => {
+    const component = setup({ search: 'fooBar', data: { items: [] } });
+    const itemSearch = component.find('[className="search__items__found__title"]');
+    expect(itemSearch.length).toBe(0);
+  });
+
+  test('render search__items__found__title when search and data.items isnt`t empty', () => {
+    const component = setup({ search: 'fooBar', data: { items: [{ id: 'fooBar' }] } });
+    const itemSearch = component.find('[className="search__items__found__title"]');
+    expect(itemSearch.length).toBe(1);
+  });
+
+  test('render search__items__found__infinite__scroll when search isn`t empty', () => {
+    const component = setup({ search: 'fooBar' });
+    const itemSearch = component.find('[className="search__items__found__infinite__scroll"]');
+    expect(itemSearch.length).toBe(1);
+  });
+
+  test('not render search__items__found__infinite__scroll when search is empty', () => {
+    const component = setup({ search: '' });
+    const itemSearch = component.find('[className="search__items__found__infinite__scroll"]');
+    expect(itemSearch.length).toBe(0);
+  });
+
+  test('render item__select-list', () => {
+    const component = setup();
+    const itemSearch = component.find('[className="item__select-list"]');
+    expect(itemSearch.length).toBe(1);
+  });
 });

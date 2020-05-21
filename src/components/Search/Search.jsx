@@ -83,6 +83,7 @@ class Search extends React.PureComponent {
                 <div>
                   {data.items.length > 0 && <h1 className="search__items__found__title">Items found</h1>}
                   <InfiniteScroll
+                    className="search__items__found__infinite__scroll"
                     initialLoad={false}
                     pageStart={0}
                     loadMore={() => getMorePages()}
@@ -96,6 +97,7 @@ class Search extends React.PureComponent {
           </div>
         </div>
         <SelectList
+          className="item__select-list"
           selectedOption={selectedOption}
           onRequestClose={onRequestClose}
         />
@@ -109,7 +111,7 @@ Search.propTypes = {
     items: PropTypes.arrayOf(object).isRequired,
   }).isRequired,
   data: PropTypes.shape({
-    items: PropTypes.arrayOf(PropTypes.string),
+    items: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
   list: PropTypes.arrayOf(PropTypes.string).isRequired,
   hasMoreItems: PropTypes.bool.isRequired,
