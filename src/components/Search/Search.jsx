@@ -92,7 +92,7 @@ class Search extends React.PureComponent {
                     hasMore={hasMoreItems}
                     loader={data.items.length > 0 && <div className="loader" key={0}>Loading ...</div>}
                   >
-                    <Items items={(() => this.filterData())()} addItemWishlist={addItemWishlist} />
+                    <Items data-test="search__items__component" items={(() => this.filterData())()} addItemWishlist={addItemWishlist} />
                   </InfiniteScroll>
                 </div>
               )}

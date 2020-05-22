@@ -104,4 +104,56 @@ describe('Search should render correctly ', () => {
     const itemSearch = component.find('[data-test="item__select-list"]');
     expect(itemSearch.length).toBe(1);
   });
+
+  it('render search__items__component not excluding wishlist items (wishlist empty)', () => {
+    const component = setup({
+      search: 'fooBar',
+      data: {
+        items: [
+          { id: '1' },
+          { id: '2' },
+          { id: '3' },
+          { id: '4' },
+        ],
+      },
+      wishList: {
+        items: [
+        ],
+      },
+    });
+    const itemSearch = component.find('[data-test="search__items__component"]');
+    expect(itemSearch.props().items)
+      .toEqual([
+        { id: '1' },
+        { id: '2' },
+        { id: '3' },
+        { id: '4' },
+      ]);
+  });
+
+  it('render search__items__component excluding wishlist items', () => {
+    const component = setup({
+      search: 'fooBar',
+      data: {
+        items: [
+          { id: '1' },
+          { id: '2' },
+          { id: '3' },
+          { id: '4' },
+        ],
+      },
+      wishList: {
+        items: [
+          { id: '1' },
+          { id: '3' },
+        ],
+      },
+    });
+    const itemSearch = component.find('[data-test="search__items__component"]');
+    expect(itemSearch.props().items)
+      .toEqual([
+        { id: '2' },
+        { id: '4' },
+      ]);
+  });
 });
