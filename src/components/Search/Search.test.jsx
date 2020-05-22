@@ -35,6 +35,12 @@ const setup = (props) => {
 };
 
 describe('Search should render correctly ', () => {
+  it('render search component', () => {
+    const component = setup();
+    const itemSearch = component.find('[data-test="search"]');
+    expect(itemSearch.length).toBe(1);
+  });
+
   it('render search__search component', () => {
     const component = setup();
     const itemSearch = component.find('[className="search__search"]');
@@ -53,49 +59,49 @@ describe('Search should render correctly ', () => {
 
   it('render search__items component', () => {
     const component = setup();
-    const itemSearch = component.find('[className="search__items"]');
+    const itemSearch = component.find('[data-test="search__items"]');
     expect(itemSearch.length).toBe(1);
   });
 
   it('render search__items__found component', () => {
     const component = setup();
-    const itemSearch = component.find('[className="search__items__found"]');
+    const itemSearch = component.find('[data-test="search__items__found"]');
     expect(itemSearch.length).toBe(1);
   });
 
   it('not render search__items__found__title when search is empty', () => {
     const component = setup({ search: '', data: { items: [{ id: 'fooBar' }] } });
-    const itemSearch = component.find('[className="search__items__found__title"]');
+    const itemSearch = component.find('[data-test="search__items__found__title"]');
     expect(itemSearch.length).toBe(0);
   });
 
   it('not render search__items__found__title when data.items is empty', () => {
     const component = setup({ search: 'fooBar', data: { items: [] } });
-    const itemSearch = component.find('[className="search__items__found__title"]');
+    const itemSearch = component.find('[data-test="search__items__found__title"]');
     expect(itemSearch.length).toBe(0);
   });
 
   it('render search__items__found__title when search and data.items isnt`t empty', () => {
     const component = setup({ search: 'fooBar', data: { items: [{ id: 'fooBar' }] } });
-    const itemSearch = component.find('[className="search__items__found__title"]');
+    const itemSearch = component.find('[data-test="search__items__found__title"]');
     expect(itemSearch.length).toBe(1);
   });
 
   it('render search__items__found__infinite__scroll when search isn`t empty', () => {
     const component = setup({ search: 'fooBar' });
-    const itemSearch = component.find('[className="search__items__found__infinite__scroll"]');
+    const itemSearch = component.find('[data-test="search__items__found__infinite__scroll"]');
     expect(itemSearch.length).toBe(1);
   });
 
   it('not render search__items__found__infinite__scroll when search is empty', () => {
     const component = setup({ search: '' });
-    const itemSearch = component.find('[className="search__items__found__infinite__scroll"]');
+    const itemSearch = component.find('[data-test="search__items__found__infinite__scroll"]');
     expect(itemSearch.length).toBe(0);
   });
 
   it('render item__select-list', () => {
     const component = setup();
-    const itemSearch = component.find('[className="item__select-list"]');
+    const itemSearch = component.find('[data-test="item__select-list"]');
     expect(itemSearch.length).toBe(1);
   });
 });

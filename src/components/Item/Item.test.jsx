@@ -12,20 +12,20 @@ const setup = (item, addItemWishlist) => shallow(
 
 it('render without error', () => {
   const wrapper = setup();
-  const item = wrapper.find('[className="item"]');
+  const item = wrapper.find('[data-test="item"]');
   expect(item.length).toBe(1);
 });
 
 describe('Item image should render correctly', () => {
   it('renders item__image', () => {
     const wrapper = setup();
-    const itemImage = wrapper.find('[className="item__image"]');
+    const itemImage = wrapper.find('[data-test="item__image"]');
     expect(itemImage.length).toBe(1);
   });
 
   it('renders no-image in item__image when has no image', () => {
     const wrapper = setup();
-    const itemImage = wrapper.find('[className="item__image"]');
+    const itemImage = wrapper.find('[data-test="item__image"]');
     expect(itemImage.find('img').prop('src')).toEqual(logoImage);
   });
 });
@@ -33,22 +33,22 @@ describe('Item image should render correctly', () => {
 describe('Item content should render correcly', () => {
   it('renders item__content', () => {
     const wrapper = setup();
-    const itemContent = wrapper.find('[className="item__content"]');
+    const itemContent = wrapper.find('[data-test="item__content"]');
     expect(itemContent.length).toBe(1);
   });
 
   it('renders title and description', () => {
     const wrapper = setup();
-    const itemContent = wrapper.find('[className="item__content"]');
-    expect(itemContent.props().children[0].props.className).toEqual('item__content__title');
-    expect(itemContent.props().children[1].props.className).toEqual('item__content__description');
+    const itemContent = wrapper.find('[data-test="item__content"]');
+    expect(itemContent.props().children[0].props['data-test']).toEqual('item__content__title');
+    expect(itemContent.props().children[1].props['data-test']).toEqual('item__content__description');
   });
 });
 
 describe('Item title should render correctly', () => {
   it('renders item__content__title', () => {
     const wrapper = setup();
-    const itemContentTitle = wrapper.find('[className="item__content__title"]');
+    const itemContentTitle = wrapper.find('[data-test="item__content__title"]');
     expect(itemContentTitle.length).toBe(1);
   });
 
@@ -63,7 +63,7 @@ describe('Item title should render correctly', () => {
       },
     };
     const wrapper = setup(item);
-    const itemContentTitle = wrapper.find('[className="item__content__title"]');
+    const itemContentTitle = wrapper.find('[data-test="item__content__title"]');
     expect(itemContentTitle.text()).toBe(randomTitle);
     expect(itemContentTitle.props().href).toBe(randomInfoLink);
   });
@@ -72,7 +72,7 @@ describe('Item title should render correctly', () => {
 describe('Item description should render correctly', () => {
   it('renders item__content__description', () => {
     const wrapper = setup();
-    const itemContentDescription = wrapper.find('[className="item__content__description"]');
+    const itemContentDescription = wrapper.find('[data-test="item__content__description"]');
     expect(itemContentDescription.length).toBe(1);
   });
 
@@ -85,7 +85,7 @@ describe('Item description should render correctly', () => {
       },
     };
     const wrapper = setup(item);
-    const itemContentDescription = wrapper.find('[className="item__content__description"]');
+    const itemContentDescription = wrapper.find('[data-test="item__content__description"]');
     expect(itemContentDescription.text()).toBe(randomDescription);
   });
 });
@@ -93,7 +93,7 @@ describe('Item description should render correctly', () => {
 describe('Button should be rendered correctly', () => {
   it('renders item__button', () => {
     const wrapper = setup();
-    const itemButton = wrapper.find('[className="item__button"]');
+    const itemButton = wrapper.find('[data-test="item__button"]');
     expect(itemButton.length).toBe(1);
   });
 
@@ -107,7 +107,7 @@ describe('Button should be rendered correctly', () => {
     const mockCallBack = jest.fn();
     const addItemWishlist = mockCallBack;
     const wrapper = setup(item, addItemWishlist);
-    const itemButton = wrapper.find('[className="item__button"]');
+    const itemButton = wrapper.find('[data-test="item__button"]');
     itemButton.simulate('click');
     expect(mockCallBack).toHaveBeenCalledTimes(1);
     expect(mockCallBack).toHaveBeenCalledWith(randomId);

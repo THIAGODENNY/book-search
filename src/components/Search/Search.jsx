@@ -62,7 +62,7 @@ class Search extends React.PureComponent {
       selectedOption, search, data, hasMoreItems,
     } = this.props;
     return (
-      <div className="search">
+      <div data-test="search" className="search">
         <div className={
           classNames({ search__search: !search, 'search__search--found': search })
         }
@@ -71,18 +71,20 @@ class Search extends React.PureComponent {
             minLength={2}
             onChange={(event) => searchHandle(event.target.value)}
             debounceTimeout={1000}
+            data-search="search__search__input-search"
             className="search__search__input-search"
             value={search}
           />
         </div>
 
-        <div className="search__items">
-          <div className="search__items__found">
+        <div data-test="search__items" className="search__items">
+          <div data-test="search__items__found" className="search__items__found">
             {search
               && (
                 <div>
-                  {data.items.length > 0 && <h1 className="search__items__found__title">Items found</h1>}
+                  {data.items.length > 0 && <h1 data-test="search__items__found__title" className="search__items__found__title">Items found</h1>}
                   <InfiniteScroll
+                    data-test="search__items__found__infinite__scroll"
                     className="search__items__found__infinite__scroll"
                     initialLoad={false}
                     pageStart={0}
@@ -97,6 +99,7 @@ class Search extends React.PureComponent {
           </div>
         </div>
         <SelectList
+          data-test="item__select-list"
           className="item__select-list"
           selectedOption={selectedOption}
           onRequestClose={onRequestClose}
