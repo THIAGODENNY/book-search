@@ -24,7 +24,9 @@ class Search extends React.PureComponent {
   }
 
   update() {
-    const { wishList, list } = this.props;
+    const {
+      wishList, list, updateFilterDispatch, updateAllListDispatch,
+    } = this.props;
     const { items } = wishList;
 
     localStorage.setItem('list', list.join(','));
@@ -35,8 +37,8 @@ class Search extends React.PureComponent {
     if (
       !arraysEqual(list, newAllList)
     ) {
-      updateAllList(newAllList);
-      updateFilter(null);
+      updateAllListDispatch(newAllList);
+      updateFilterDispatch(null);
     }
   }
 
@@ -70,6 +72,9 @@ class Search extends React.PureComponent {
       data,
       hasMoreItems,
       getMorePagesDispatch,
+      searchHandleDispatch,
+      addItemWishlistDispatch,
+      onRequestCloseDispatch,
     } = this.props;
 
     return (
@@ -80,7 +85,7 @@ class Search extends React.PureComponent {
         >
           <DebounceInput
             minLength={2}
-            onChange={(event) => searchHandle(event.target.value)}
+            onChange={(event) => searchHandleDispatch(event.target.value)}
             debounceTimeout={1000}
             data-search="search__search__input-search"
             className="search__search__input-search"
@@ -103,7 +108,7 @@ class Search extends React.PureComponent {
                     hasMore={hasMoreItems}
                     loader={data.items.length > 0 && <div className="loader" key={0}>Loading ...</div>}
                   >
-                    <Items data-test="search__items__component" items={(() => this.filterData())()} addItemWishlist={addItemWishlist} />
+                    <Items data-test="search__items__component" items={(() => this.filterData())()} addItemWishlist={addItemWishlistDispatch} />
                   </InfiniteScroll>
                 </div>
               )}
@@ -113,7 +118,7 @@ class Search extends React.PureComponent {
           data-test="item__select-list"
           className="item__select-list"
           selectedOption={selectedOption}
-          onRequestClose={onRequestClose}
+          onRequestClose={onRequestCloseDispatch}
         />
       </div>
     );
@@ -135,6 +140,11 @@ Search.propTypes = {
     id: PropTypes.string.isRequired,
   }).isRequired,
   getMorePagesDispatch: PropTypes.func.isRequired,
+  searchHandleDispatch: PropTypes.func.isRequired,
+  updateFilterDispatch: PropTypes.func.isRequired,
+  updateAllListDispatch: PropTypes.func.isRequired,
+  addItemWishlistDispatch: PropTypes.func.isRequired,
+  onRequestCloseDispatch: PropTypes.func.isRequired,
 };
 
 Search.defaults = {
@@ -155,6 +165,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getMorePagesDispatch: () => dispatch(getMorePages),
+  searchHandleDispatch: (event) => dispatch(searchHandle(event)),
+  updateFilterDispatch: () => dispatch(updateFilter),
+  updateAllListDispatch: (event) => dispatch(updateAllList(event)),
+  addItemWishlistDispatch: (event) => dispatch(addItemWishlist(event)),
+  onRequestCloseDispatch: () => dispatch(onRequestClose),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);
