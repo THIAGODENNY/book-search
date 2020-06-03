@@ -41,7 +41,13 @@ class Search extends React.PureComponent {
   }
 
   filterData() {
-    const { wishList, data, hasMoreItems } = this.props;
+    const {
+      wishList,
+      data,
+      hasMoreItems,
+      getMorePagesDispatch,
+    } = this.props;
+
     const { items } = wishList;
 
     if (items.length > 0 && data.items) {
@@ -50,7 +56,7 @@ class Search extends React.PureComponent {
       )
         .length === 0);
       if (items.length > 0 && itemsToLoad.length < 10 && hasMoreItems) {
-        getMorePages();
+        getMorePagesDispatch();
       }
       return itemsToLoad;
     }
@@ -59,8 +65,13 @@ class Search extends React.PureComponent {
 
   render() {
     const {
-      selectedOption, search, data, hasMoreItems,
+      selectedOption,
+      search,
+      data,
+      hasMoreItems,
+      getMorePagesDispatch,
     } = this.props;
+
     return (
       <div data-test="search" className="search">
         <div className={
@@ -88,7 +99,7 @@ class Search extends React.PureComponent {
                     className="search__items__found__infinite__scroll"
                     initialLoad={false}
                     pageStart={0}
-                    loadMore={() => getMorePages()}
+                    loadMore={() => getMorePagesDispatch()}
                     hasMore={hasMoreItems}
                     loader={data.items.length > 0 && <div className="loader" key={0}>Loading ...</div>}
                   >
@@ -123,6 +134,7 @@ Search.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     id: PropTypes.string.isRequired,
   }).isRequired,
+  getMorePagesDispatch: PropTypes.func.isRequired,
 };
 
 Search.defaults = {
@@ -141,4 +153,8 @@ const mapStateToProps = (state) => ({
   hasMoreItems: state.hasMoreItems,
 });
 
-export default connect(mapStateToProps)(Search);
+const mapDispatchToProps = (dispatch) => ({
+  getMorePagesDispatch: () => dispatch(getMorePages),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

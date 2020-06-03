@@ -2,28 +2,32 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import Search from './Search';
+import { getMorePages } from '../../redux/actions';
+import { storeFactory } from '../../tests/storeFactory';
+
+const initialState = (props) => ({
+  data: {
+    items: [],
+  },
+  page: 0,
+  wishList: {
+    items: JSON.parse(localStorage.getItem('items') || '[]'),
+  },
+  search: '',
+  list: [],
+  selectedOption: {
+    isOpen: false,
+    id: '',
+  },
+  createListIsOpen: false,
+  filter: undefined,
+  hasMoreItems: true,
+  ...props,
+});
 
 const mockStore = configureStore([]);
 const setup = (props) => {
-  const store = mockStore({
-    data: {
-      items: [],
-    },
-    page: 0,
-    wishList: {
-      items: JSON.parse(localStorage.getItem('items') || '[]'),
-    },
-    search: '',
-    list: [],
-    selectedOption: {
-      isOpen: false,
-      id: '',
-    },
-    createListIsOpen: false,
-    filter: undefined,
-    hasMoreItems: true,
-    ...props,
-  });
+  const store = mockStore(initialState(props));
 
   return shallow(
     <Search
@@ -131,8 +135,8 @@ describe('Search should render correctly ', () => {
       ]);
   });
 
-  it('render search__items__component excluding wishlist items', () => {
-    const component = setup({
+  it('render search__items__component excluding wishlist items', async () => {
+    const storeRedux = storeFactory(initialState({
       search: 'fooBar',
       data: {
         items: [
@@ -148,12 +152,57 @@ describe('Search should render correctly ', () => {
           { id: '3' },
         ],
       },
-    });
+    }));
+
+    const component = shallow(
+      <Search store={storeRedux} />,
+    )
+      .dive()
+      .dive();
+
     const itemSearch = component.find('[data-test="search__items__component"]');
     expect(itemSearch.props().items)
       .toEqual([
         { id: '2' },
         { id: '4' },
       ]);
+  });
+
+  it('Scroll Infinite Scroll and call to getMorePages', async () => {
+    const storeRedux = storeFactory(initialState({ search: 'fooBar' }));
+    storeRedux.dispatch = jest.fn();
+    const component = shallow(
+      <Search store={storeRedux} />,
+    )
+      .dive()
+      .dive();
+
+    const itemSearch = component.find('InfiniteScroll');
+
+    itemSearch.dive().instance().props.loadMore();
+
+    expect(itemSearch.length).toBe(1);
+    expect(storeRedux.dispatch).toHaveBeenCalledTimes(1);
+    expect(storeRedux.dispatch).toHaveBeenCalledWith(
+      getMorePages,
+    );
+  });
+
+  it('If not Scroll Infinite Scroll, no calls on getMorePages', async () => {
+    const storeRedux = storeFactory(initialState({ search: 'fooBar' }));
+    storeRedux.dispatch = jest.fn();
+    const component = shallow(
+      <Search store={storeRedux} />,
+    )
+      .dive()
+      .dive();
+
+    const itemSearch = component.find('InfiniteScroll');
+
+    expect(itemSearch.length).toBe(1);
+    expect(storeRedux.dispatch).toHaveBeenCalledTimes(0);
+    expect(storeRedux.dispatch).not.toHaveBeenCalledWith(
+      getMorePages,
+    );
   });
 });
