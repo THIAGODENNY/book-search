@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './WishList.scss';
-import { updateFilter, updateAllList, updateWishList } from '../../redux/actions';
+import * as actionCreator from '../../redux/actions';
 import arraysEqual from '../../../tools/arraysEqual';
 import Carousel from '../Carousel';
 import WishlistList from '../WishlistList/WishlistList';
@@ -19,6 +19,8 @@ class WishList extends Component {
     const {
       wishList,
       list,
+      updateFilter,
+      updateAllList,
     } = this.props;
 
     localStorage.setItem('list', list.join(','));
@@ -33,7 +35,7 @@ class WishList extends Component {
   }
 
   render() {
-    const { wishList } = this.props;
+    const { wishList, updateWishList } = this.props;
     const { listName } = this.state;
 
     const handleShowItems = (list) => {
@@ -121,6 +123,9 @@ WishList.propTypes = {
   list: PropTypes.arrayOf(
     PropTypes.string,
   ).isRequired,
+  updateFilter: PropTypes.func.isRequired,
+  updateAllList: PropTypes.func.isRequired,
+  updateWishList: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -128,4 +133,10 @@ const mapStateToProps = (state) => ({
   list: state.list,
 });
 
-export default connect(mapStateToProps)(WishList);
+const mapDispatchToProps = (dispatch) => ({
+  updateFilter: (event) => dispatch(actionCreator.updateFilter(event)),
+  updateAllList: (event) => dispatch(actionCreator.updateAllList(event)),
+  updateWishList: (event) => dispatch(actionCreator.updateWishList(event)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(WishList);

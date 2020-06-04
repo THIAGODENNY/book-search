@@ -9,14 +9,7 @@ import './Search.scss';
 import SelectList from '../SelectList';
 import arraysEqual from '../../../tools/arraysEqual';
 
-import {
-  updateFilter,
-  updateAllList,
-  searchHandle,
-  addItemWishlist,
-  onRequestClose,
-  getMorePages,
-} from '../../redux/actions';
+import * as actionCreator from '../../redux/actions';
 
 class Search extends React.PureComponent {
   componentDidMount() {
@@ -104,7 +97,9 @@ class Search extends React.PureComponent {
                     className="search__items__found__infinite__scroll"
                     initialLoad={false}
                     pageStart={0}
-                    loadMore={() => getMorePagesDispatch()}
+                    loadMore={() => {
+                      getMorePagesDispatch();
+                    }}
                     hasMore={hasMoreItems}
                     loader={data.items.length > 0 && <div className="loader" key={0}>Loading ...</div>}
                   >
@@ -164,12 +159,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getMorePagesDispatch: () => dispatch(getMorePages),
-  searchHandleDispatch: (event) => dispatch(searchHandle(event)),
-  updateFilterDispatch: () => dispatch(updateFilter),
-  updateAllListDispatch: (event) => dispatch(updateAllList(event)),
-  addItemWishlistDispatch: (event) => dispatch(addItemWishlist(event)),
-  onRequestCloseDispatch: () => dispatch(onRequestClose),
+  getMorePagesDispatch: () => dispatch(actionCreator.getMorePages),
+  searchHandleDispatch: (event) => dispatch(actionCreator.searchHandle(event)),
+  updateFilterDispatch: () => dispatch(actionCreator.updateFilter),
+  updateAllListDispatch: (event) => dispatch(actionCreator.updateAllList(event)),
+  addItemWishlistDispatch: (event) => dispatch(actionCreator.addItemWishlist(event)),
+  onRequestCloseDispatch: () => dispatch(actionCreator.onRequestClose),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);
