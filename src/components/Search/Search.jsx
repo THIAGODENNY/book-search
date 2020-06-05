@@ -4,6 +4,7 @@ import { DebounceInput } from 'react-debounce-input';
 import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
 import classNames from 'classnames';
+import { bindActionCreators } from 'redux';
 import Items from '../Items';
 import './Search.scss';
 import SelectList from '../SelectList';
@@ -18,7 +19,7 @@ class Search extends React.PureComponent {
 
   update() {
     const {
-      wishList, list, updateFilterDispatch, updateAllListDispatch,
+      wishList, list, searchActions,
     } = this.props;
     const { items } = wishList;
 
@@ -30,8 +31,8 @@ class Search extends React.PureComponent {
     if (
       !arraysEqual(list, newAllList)
     ) {
-      updateAllListDispatch(newAllList);
-      updateFilterDispatch(null);
+      searchActions.updateAllList(newAllList);
+      searchActions.updateFilter(null);
     }
   }
 
@@ -40,8 +41,9 @@ class Search extends React.PureComponent {
       wishList,
       data,
       hasMoreItems,
-      getMorePagesDispatch,
+      searchActions,
     } = this.props;
+
 
     const { items } = wishList;
 
@@ -51,7 +53,7 @@ class Search extends React.PureComponent {
       )
         .length === 0);
       if (items.length > 0 && itemsToLoad.length < 10 && hasMoreItems) {
-        getMorePagesDispatch();
+        searchActions.getMorePages();
       }
       return itemsToLoad;
     }
@@ -64,10 +66,7 @@ class Search extends React.PureComponent {
       search,
       data,
       hasMoreItems,
-      getMorePagesDispatch,
-      searchHandleDispatch,
-      addItemWishlistDispatch,
-      onRequestCloseDispatch,
+      searchActions,
     } = this.props;
 
     return (
@@ -78,7 +77,7 @@ class Search extends React.PureComponent {
         >
           <DebounceInput
             minLength={2}
-            onChange={(event) => searchHandleDispatch(event.target.value)}
+            onChange={(event) => searchActions.searchHandle(event.target.value)}
             debounceTimeout={1000}
             data-search="search__search__input-search"
             className="search__search__input-search"
@@ -97,13 +96,11 @@ class Search extends React.PureComponent {
                     className="search__items__found__infinite__scroll"
                     initialLoad={false}
                     pageStart={0}
-                    loadMore={() => {
-                      getMorePagesDispatch();
-                    }}
+                    loadMore={searchActions.getMorePages}
                     hasMore={hasMoreItems}
                     loader={data.items.length > 0 && <div className="loader" key={0}>Loading ...</div>}
                   >
-                    <Items data-test="search__items__component" items={(() => this.filterData())()} addItemWishlist={addItemWishlistDispatch} />
+                    <Items data-test="search__items__component" items={(() => this.filterData())()} addItemWishlist={searchActions.addItemWishlist} />
                   </InfiniteScroll>
                 </div>
               )}
@@ -113,7 +110,7 @@ class Search extends React.PureComponent {
           data-test="item__select-list"
           className="item__select-list"
           selectedOption={selectedOption}
-          onRequestClose={onRequestCloseDispatch}
+          onRequestClose={searchActions.onRequestClose}
         />
       </div>
     );
@@ -134,12 +131,14 @@ Search.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     id: PropTypes.string.isRequired,
   }).isRequired,
-  getMorePagesDispatch: PropTypes.func.isRequired,
-  searchHandleDispatch: PropTypes.func.isRequired,
-  updateFilterDispatch: PropTypes.func.isRequired,
-  updateAllListDispatch: PropTypes.func.isRequired,
-  addItemWishlistDispatch: PropTypes.func.isRequired,
-  onRequestCloseDispatch: PropTypes.func.isRequired,
+  searchActions: PropTypes.shape({
+    getMorePages: PropTypes.func.isRequired,
+    searchHandle: PropTypes.func.isRequired,
+    updateFilter: PropTypes.func.isRequired,
+    updateAllList: PropTypes.func.isRequired,
+    addItemWishlist: PropTypes.func.isRequired,
+    onRequestClose: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 Search.defaults = {
@@ -159,12 +158,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getMorePagesDispatch: () => dispatch(actionCreator.getMorePages),
-  searchHandleDispatch: (event) => dispatch(actionCreator.searchHandle(event)),
-  updateFilterDispatch: () => dispatch(actionCreator.updateFilter),
-  updateAllListDispatch: (event) => dispatch(actionCreator.updateAllList(event)),
-  addItemWishlistDispatch: (event) => dispatch(actionCreator.addItemWishlist(event)),
-  onRequestCloseDispatch: () => dispatch(actionCreator.onRequestClose),
+  searchActions: bindActionCreators(actionCreator, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

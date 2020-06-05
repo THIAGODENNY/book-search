@@ -1,6 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 import Search from './Search';
 import { getMorePages } from '../../redux/actions';
 import { storeFactory } from '../../tests/storeFactory';
@@ -183,8 +185,8 @@ describe('Search should render correctly ', () => {
 
     expect(itemSearch.length).toBe(1);
     expect(storeRedux.dispatch).toHaveBeenCalledTimes(1);
-    expect(storeRedux.dispatch).toHaveBeenCalledWith(
-      getMorePages,
+    expect(storeRedux.dispatch.mock.calls[0][0].toString()).toBe(
+      getMorePages().toString(),
     );
   });
 
@@ -204,5 +206,33 @@ describe('Search should render correctly ', () => {
     expect(storeRedux.dispatch).not.toHaveBeenCalledWith(
       getMorePages,
     );
+  });
+
+  it('Changes redux items state when Scrolling Infinite Scroll', async () => {
+    const storeRedux = storeFactory(initialState({ search: 'fooBar' }));
+    const component = shallow(
+      <Search store={storeRedux} />,
+    )
+      .dive()
+      .dive();
+
+    const mock = new MockAdapter(axios);
+    const response = {
+      items: [
+        { id: 1 },
+        { id: 2 },
+        { id: 3 },
+      ],
+    };
+
+    mock
+      .onGet('https://www.googleapis.com/books/v1/volumes?q=fooBar&startIndex=0')
+      .reply(200, response);
+
+    const itemSearch = component.find('InfiniteScroll');
+    await itemSearch.dive().instance().props.loadMore();
+    await component.update();
+    expect(storeRedux.getState().search).toBe('fooBar');
+    expect(storeRedux.getState().data).toEqual(response);
   });
 });

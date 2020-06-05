@@ -7,8 +7,8 @@ export const updateWishList = (wishList) => {
 };
 export const updateSearch = (search) => ({ type: 'SET_SEARCH', search });
 export const updateSelectedOption = (selectedOption) => ({ type: 'SET_SELECTED_OPTION', selectedOption });
-export const updateFilter = (filter) => ({ type: 'SET_FILTER', filter });
-export const updateAllList = (list) => ({ type: 'SET_ALL_LIST', list });
+export const updateFilter = (filter) => (dispatch) => dispatch({ type: 'SET_FILTER', filter });
+export const updateAllList = (list) => (dispatch) => dispatch({ type: 'SET_ALL_LIST', list });
 export const updateList = (list) => ({ type: 'SET_LIST', list });
 export const updateCreateListIsOpen = (createListIsOpen) => ({ type: 'SET_CREATE_LIST_IS_OPEN', createListIsOpen });
 export const resetPage = () => ({ type: 'RESET_PAGE' });
@@ -46,13 +46,13 @@ export const fetchData = async (dispatch, getState) => {
   }
 };
 
-export const getMorePages = (dispatch, getState) => fetchData(dispatch, getState);
+export const getMorePages = () => (dispatch, getState) => fetchData(dispatch, getState);
 
 export const searchHandle = (event) => (dispatch) => {
   dispatch(updateItemsData({ items: [] }));
   dispatch(resetPage());
   dispatch(updateSearch(event));
-  dispatch(fetchData());
+  dispatch(fetchData);
 };
 
 export const handleFilter = (e) => {
@@ -68,7 +68,10 @@ export const addItemWishlist = (id) => (dispatch) => {
   dispatch(updateSelectedOption({ isOpened: true, id }));
 };
 
-export const onRequestClose = () => (updateSelectedOption({ isOpened: false }));
+export const onRequestClose = () => (dispatch) => dispatch(
+  updateSelectedOption({ isOpened: false }),
+);
+
 export const removeItemWishList = (items) => (dispatch) => {
   dispatch(updateWishList({ items }));
 };
