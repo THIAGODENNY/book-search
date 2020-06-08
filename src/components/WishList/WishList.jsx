@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './WishList.scss';
+import { bindActionCreators } from 'redux';
 import * as actionCreator from '../../redux/actions';
 import arraysEqual from '../../../tools/arraysEqual';
 import Carousel from '../Carousel';
@@ -19,8 +20,7 @@ class WishList extends Component {
     const {
       wishList,
       list,
-      updateFilter,
-      updateAllList,
+      wishlistActions,
     } = this.props;
 
     localStorage.setItem('list', list.join(','));
@@ -29,13 +29,13 @@ class WishList extends Component {
     const newAllList = [...new Set(wishListLists)];
 
     if (!arraysEqual(list, newAllList)) {
-      updateAllList(newAllList);
-      updateFilter(null);
+      wishlistActions.updateAllList(newAllList);
+      wishlistActions.updateFilter(null);
     }
   }
 
   render() {
-    const { wishList, updateWishList } = this.props;
+    const { wishList, wishlistActions } = this.props;
     const { listName } = this.state;
 
     const handleShowItems = (list) => {
@@ -55,7 +55,7 @@ class WishList extends Component {
         }
         return i.listName !== listNameToFilter;
       });
-      updateWishList({ items: removedWishlist });
+      wishlistActions.updateWishList({ items: removedWishlist });
 
       const listExists = removedWishlist
         .filter((list) => list.listName === listName)
@@ -123,9 +123,11 @@ WishList.propTypes = {
   list: PropTypes.arrayOf(
     PropTypes.string,
   ).isRequired,
-  updateFilter: PropTypes.func.isRequired,
-  updateAllList: PropTypes.func.isRequired,
-  updateWishList: PropTypes.func.isRequired,
+  wishlistActions: PropTypes.shape({
+    updateFilter: PropTypes.func.isRequired,
+    updateAllList: PropTypes.func.isRequired,
+    updateWishList: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -134,9 +136,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  updateFilter: (event) => dispatch(actionCreator.updateFilter(event)),
-  updateAllList: (event) => dispatch(actionCreator.updateAllList(event)),
-  updateWishList: (event) => dispatch(actionCreator.updateWishList(event)),
+  wishlistActions: bindActionCreators(actionCreator, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WishList);
