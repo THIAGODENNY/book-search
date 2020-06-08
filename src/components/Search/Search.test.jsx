@@ -3,6 +3,8 @@ import { shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import renderer from 'react-test-renderer';
+import { Provider } from 'react-redux';
 import Search from './Search';
 import { getMorePages } from '../../redux/actions';
 import { storeFactory } from '../../tests/storeFactory';
@@ -45,6 +47,14 @@ describe('Search should render correctly ', () => {
     const component = setup();
     const itemSearch = component.find('[data-test="search"]');
     expect(itemSearch.length).toBe(1);
+  });
+
+  it('render search component correctly', () => {
+    const storeRedux = storeFactory(initialState({ search: 'fooBar' }));
+    const tree = renderer
+      .create(<Provider store={storeRedux}><Search props={initialState({ search: 'fooBar' })} /></Provider>)
+      .toJSON();
+    expect(tree).toMatchSnapshot();
   });
 
   it('render search__search component', () => {
