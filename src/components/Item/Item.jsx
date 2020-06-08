@@ -14,18 +14,19 @@ const Item = ({ item, addItemWishlist }) => {
   const { smallThumbnail } = imageLinks || [undefined];
 
   return (
-    <div key={id} className="item">
+    <div key={id} data-test="item" className="item">
       <img
+        data-test="item__image"
         className="item__image"
         type="image"
         src={smallThumbnail || defaultImage}
         alt="Logo"
       />
-      <div className="item__content">
-        <a className="item__content__title" href={infoLink}><strong>{title}</strong></a>
-        <p className="item__content__description">{description}</p>
+      <div data-test="item__content" className="item__content">
+        <a data-test="item__content__title" className="item__content__title" href={infoLink}><strong>{title}</strong></a>
+        <p data-test="item__content__description" className="item__content__description">{description}</p>
       </div>
-      <button type="button" className="item__button" onClick={() => addItemWishlist(id)}>Add to list</button>
+      <button data-test="item__button" type="button" className="item__button" onClick={() => addItemWishlist(id)}>Add to list</button>
     </div>
   );
 };
@@ -46,17 +47,19 @@ Item.propTypes = {
   imageLinks: PropTypes.shape({
     smallThumbnail: PropTypes.string,
   }),
-  addItemWishlist: PropTypes.func.isRequired,
+  addItemWishlist: PropTypes.func,
 };
 
 Item.defaultProps = {
   volumeInfo: undefined,
   imageLinks: undefined,
   item: {
+    id: '0',
     volumeInfo: {
-      smallThumbnail: undefined,
+      smallThumbnail: defaultImage,
     },
   },
+  addItemWishlist: () => null,
 };
 
 export default Item;

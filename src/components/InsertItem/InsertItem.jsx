@@ -64,17 +64,18 @@ const InsertItem = ({
 };
 
 InsertItem.propTypes = {
-  isOpened: PropTypes.bool.isRequired,
+  isOpened: PropTypes.bool,
   onRequestClose: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   list: PropTypes.arrayOf(PropTypes.string).isRequired,
-  handleCreateList: PropTypes.string.isRequired,
+  handleCreateList: PropTypes.func.isRequired,
   handleSelectedListChange: PropTypes.func.isRequired,
   selectedListItem: PropTypes.string,
   id: PropTypes.string.isRequired,
 };
 
 InsertItem.defaultProps = {
+  isOpened: false,
   selectedListItem: undefined,
 };
 

@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, connect } from 'react-redux';
 import InsertItem from '../InsertItem';
 import CreateList from '../CreateList';
-import {
-  updateWishList,
-  updateSelectedOption,
+
+import * as actionCreator from '../../redux/actions';
+
+const SelectList = ({
+  selectedOption,
+  onRequestClose,
   updateList,
+  updateSelectedOption,
+  updateWishList,
   handleCreateListClose,
   handleCreateList,
-} from '../../redux/actions';
-
-const SelectList = ({ selectedOption, onRequestClose }) => {
+}) => {
   const { isOpened, id } = selectedOption;
   const [selectedListItem, setSelectedListItem] = useState();
 
@@ -81,13 +84,31 @@ const SelectList = ({ selectedOption, onRequestClose }) => {
 };
 
 SelectList.propTypes = {
-  selectedOption: PropTypes.arrayOf(
-    PropTypes.shape({
-      isOpened: PropTypes.bool.isRequired,
-      id: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  selectedOption: PropTypes.shape({
+    isOpened: PropTypes.bool,
+    id: PropTypes.string,
+  }).isRequired,
   onRequestClose: PropTypes.func.isRequired,
+  updateList: PropTypes.func.isRequired,
+  updateSelectedOption: PropTypes.func.isRequired,
+  updateWishList: PropTypes.func.isRequired,
+  handleCreateListClose: PropTypes.func.isRequired,
+  handleCreateList: PropTypes.func.isRequired,
 };
 
-export default SelectList;
+SelectList.defaults = {
+  selectedOption: {
+    isOpened: false,
+    id: '',
+  },
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  updateList: (event) => dispatch(actionCreator.updateList(event)),
+  updateSelectedOption: (event) => dispatch(actionCreator.updateSelectedOption(event)),
+  updateWishList: (event) => dispatch(actionCreator.updateWishList(event)),
+  handleCreateListClose: (event) => dispatch(actionCreator.handleCreateListClose(event)),
+  handleCreateList: (event) => dispatch(actionCreator.handleCreateList(event)),
+});
+
+export default connect(null, mapDispatchToProps)(SelectList);

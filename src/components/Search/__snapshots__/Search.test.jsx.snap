@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search should render correctly  render search component correctly 1`] = `
+<div
+  className="search"
+  data-test="search"
+>
+  <div
+    className="search__search--found"
+  >
+    <input
+      className="search__search__input-search"
+      data-search="search__search__input-search"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onKeyDown={[Function]}
+      type="text"
+      value="fooBar"
+    />
+  </div>
+  <div
+    className="search__items"
+    data-test="search__items"
+  >
+    <div
+      className="search__items__found"
+      data-test="search__items__found"
+    >
+      <div>
+        <div
+          className="search__items__found__infinite__scroll"
+          data-test="search__items__found__infinite__scroll"
+        >
+          <div
+            className="component-items"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div />
+</div>
+`;
