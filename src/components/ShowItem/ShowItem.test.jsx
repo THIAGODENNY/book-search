@@ -53,7 +53,7 @@ describe('ShowItem should render correcly', () => {
 
   it('renders the component', () => {
     const store = storeFactory(initialState());
-    const { firstChild } = render(
+    const { baseElement } = render(
       <Provider store={store}>
         <ShowItem
           handleDelete={() => {}}
@@ -61,7 +61,7 @@ describe('ShowItem should render correcly', () => {
         />
       </Provider>,
     );
-    expect(firstChild).toMatchSnapshot();
+    expect(baseElement).toMatchSnapshot();
   });
 
   it('executes handleDelete onSubmit', () => {

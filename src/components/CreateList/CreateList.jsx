@@ -8,6 +8,7 @@ const CreateList = ({ createListIsOpen, handleCreateListClose, handleSubmitNewLi
     className="create-list"
     isOpen={createListIsOpen}
     onRequestClose={handleCreateListClose}
+    ariaHideApp={false}
   >
     <form className="create-list__submit-form" onSubmit={handleSubmitNewList}>
       <h1>Write a list to create:</h1>

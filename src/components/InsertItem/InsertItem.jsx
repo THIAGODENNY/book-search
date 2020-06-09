@@ -24,6 +24,7 @@ const InsertItem = ({
       isOpen={isOpened}
       contentLabel="Selected Option"
       onRequestClose={onRequestClose}
+      ariaHideApp={false}
     >
       {item
         && (
