@@ -148,6 +148,11 @@ describe('Search should render correctly ', () => {
   });
 
   it('render search__items__component excluding wishlist items', async () => {
+    const mock = new MockAdapter(axios);
+    mock
+      .onGet('https://www.googleapis.com/books/v1/volumes?q=fooBar&startIndex=0')
+      .reply(200, { items: [] });
+
     const storeRedux = storeFactory(initialState({
       search: 'fooBar',
       data: {
