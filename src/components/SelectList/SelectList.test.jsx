@@ -27,12 +27,35 @@ const initialState = (props) => ({
 
 describe('testing if components renders correcly', () => {
   it('renders correcly', () => {
-    const store = storeFactory();
+    const randomText = 'fooBar';
+    const store = storeFactory(initialState({
+      data: {
+        items: [
+          {
+            id: '0',
+            volumeInfo: {
+              title: `title ${randomText}`,
+              authors: `authors ${randomText}`,
+              description: `description ${randomText}`,
+              imageLinks: {
+                smallThumbnail: `href ${randomText}`,
+              },
+              categories: `categories ${randomText}`,
+              pageCount: `pages ${randomText}`,
+              averageRating: `averageRating ${randomText}`,
+              language: `language ${randomText}`,
+            },
+          },
+        ],
+      },
+      createListIsOpen: true,
+    }));
     const { baseElement } = render(
       <Provider store={store}>
         <SelectList
           selectedOption={{ id: '0', isOpened: true }}
           onRequestClose={() => {}}
+          createListIsOpen
         />
       </Provider>,
     );
