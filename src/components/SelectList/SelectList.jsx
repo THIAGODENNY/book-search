@@ -68,7 +68,6 @@ const SelectList = ({
   return (
     <div>
       <InsertItem
-        data-testid="select-list__insert-item"
         isOpened={isOpened}
         onRequestClose={onRequestClose}
         handleSubmit={handleSubmit}
@@ -79,7 +78,6 @@ const SelectList = ({
         id={id}
       />
       <CreateList
-        data-testid="select-list__create-list"
         createListIsOpen={createListIsOpen}
         handleCreateListClose={handleCreateListClose}
         handleSubmitNewList={handleSubmitNewList}

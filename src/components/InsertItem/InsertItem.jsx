@@ -29,7 +29,7 @@ const InsertItem = ({
     >
       {item
         && (
-          <div className="insert-item__body">
+          <div data-testid="insert-item__body" className="insert-item__body">
             <div className="insert-item__body__description">
               <h1 className="insert-item__body__description__title">{item.volumeInfo.title}</h1>
               <span className="insert-item__body__description__authors">{item.volumeInfo.authors}</span>
