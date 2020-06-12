@@ -8,7 +8,8 @@
   "scripts": {
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "build": "npm test && webpack --config webpack.prod.js --optimize-minimize",
-    "test": "jest --config=jest.test.config.json"
+    "test": "jest --config=jest.test.config.json",
+    "coverage": "jest --config=jest.test.config.json --collectCoverage"
   },
   "dependencies": {
     "axios": "^0.19.2",

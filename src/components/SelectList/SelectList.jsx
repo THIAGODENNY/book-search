@@ -66,7 +66,7 @@ const SelectList = ({
   }, [isOpened]);
 
   return (
-    <div>
+    <div data-testid="select-list">
       <InsertItem
         isOpened={isOpened}
         onRequestClose={onRequestClose}

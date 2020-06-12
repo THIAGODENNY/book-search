@@ -1,13 +1,13 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import configureStore from 'redux-mock-store';
+import { render, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import { Provider } from 'react-redux';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import renderer from 'react-test-renderer';
-import { Provider } from 'react-redux';
 import Search from './Search';
-import { getMorePages } from '../../redux/actions';
 import { storeFactory } from '../../tests/storeFactory';
+
+const mock = new MockAdapter(axios);
 
 const initialState = (props) => ({
   data: {
@@ -29,107 +29,212 @@ const initialState = (props) => ({
   ...props,
 });
 
-const mockStore = configureStore([]);
 const setup = (props) => {
-  const store = mockStore(initialState(props));
+  const store = storeFactory(initialState(props));
 
-  return shallow(
-    <Search
-      store={store}
-    />,
-  )
-    .dive()
-    .dive();
+  return render(
+    <Provider store={store}>
+      <Search />
+    </Provider>,
+  );
 };
 
+const response = () => ({
+  items: [
+    {
+      id: '0',
+      volumeInfo: {
+        title: 'title',
+        authors: 'authors',
+        description: 'description',
+        imageLinks: {
+          smallThumbnail: 'href',
+        },
+        categories: 'categories',
+        pageCount: 'pages',
+        averageRating: 'averageRating',
+        language: 'language',
+      },
+    },
+  ],
+});
+
 describe('Search should render correctly ', () => {
-  it('render search component', () => {
-    const component = setup();
-    const itemSearch = component.find('[data-test="search"]');
-    expect(itemSearch.length).toBe(1);
-  });
-
-  it('render search component correctly', () => {
-    const storeRedux = storeFactory(initialState({ search: 'fooBar' }));
-    const tree = renderer
-      .create(<Provider store={storeRedux}><Search props={initialState({ search: 'fooBar' })} /></Provider>)
-      .toJSON();
-    expect(tree).toMatchSnapshot();
-  });
-
-  it('render search__search component', () => {
-    const component = setup();
-    const itemSearch = component.find('[className="search__search"]');
-    expect(itemSearch.length).toBe(1);
-  });
-  it('render search__search--found component when search isn`t empty', () => {
-    const component = setup({ search: 'fooBar' });
-    const itemSearch = component.find('[className="search__search--found"]');
-    expect(itemSearch.length).toBe(1);
-  });
-  it('render search__search__input-search component', () => {
-    const component = setup();
-    const itemSearch = component.find('[className="search__search__input-search"]');
-    expect(itemSearch.length).toBe(1);
-  });
-
-  it('render search__items component', () => {
-    const component = setup();
-    const itemSearch = component.find('[data-test="search__items"]');
-    expect(itemSearch.length).toBe(1);
-  });
-
-  it('render search__items__found component', () => {
-    const component = setup();
-    const itemSearch = component.find('[data-test="search__items__found"]');
-    expect(itemSearch.length).toBe(1);
-  });
-
-  it('not render search__items__found__title when search is empty', () => {
-    const component = setup({ search: '', data: { items: [{ id: 'fooBar' }] } });
-    const itemSearch = component.find('[data-test="search__items__found__title"]');
-    expect(itemSearch.length).toBe(0);
-  });
-
-  it('not render search__items__found__title when data.items is empty', () => {
-    const component = setup({ search: 'fooBar', data: { items: [] } });
-    const itemSearch = component.find('[data-test="search__items__found__title"]');
-    expect(itemSearch.length).toBe(0);
-  });
-
-  it('render search__items__found__title when search and data.items isnt`t empty', () => {
-    const component = setup({ search: 'fooBar', data: { items: [{ id: 'fooBar' }] } });
-    const itemSearch = component.find('[data-test="search__items__found__title"]');
-    expect(itemSearch.length).toBe(1);
-  });
-
-  it('render search__items__found__infinite__scroll when search isn`t empty', () => {
-    const component = setup({ search: 'fooBar' });
-    const itemSearch = component.find('[data-test="search__items__found__infinite__scroll"]');
-    expect(itemSearch.length).toBe(1);
-  });
-
-  it('not render search__items__found__infinite__scroll when search is empty', () => {
-    const component = setup({ search: '' });
-    const itemSearch = component.find('[data-test="search__items__found__infinite__scroll"]');
-    expect(itemSearch.length).toBe(0);
-  });
-
-  it('render item__select-list', () => {
-    const component = setup();
-    const itemSearch = component.find('[data-test="item__select-list"]');
-    expect(itemSearch.length).toBe(1);
-  });
-
-  it('render search__items__component not excluding wishlist items (wishlist empty)', () => {
-    const component = setup({
+  it('renders correclty', () => {
+    const { baseElement } = setup({
       search: 'fooBar',
       data: {
         items: [
-          { id: '1' },
-          { id: '2' },
-          { id: '3' },
-          { id: '4' },
+          {
+            id: '0',
+            volumeInfo: {
+              title: 'title',
+              authors: 'authors',
+              description: 'description',
+              imageLinks: {
+                smallThumbnail: 'href',
+              },
+              categories: 'categories',
+              pageCount: 'pages',
+              averageRating: 'averageRating',
+              language: 'language',
+            },
+          },
+        ],
+      },
+    });
+
+    expect(baseElement).toMatchSnapshot();
+  });
+
+  it('render search component', () => {
+    const { getByTestId } = setup();
+    expect(getByTestId('search'));
+  });
+
+  it('render search__search component', () => {
+    const { getByTestId } = setup(initialState());
+    expect(getByTestId('search__search')).toHaveClass('search__search');
+  });
+
+  it('render search__search--found component when search isn`t empty', () => {
+    const { getByTestId } = setup({ search: 'fooBar' });
+    expect(getByTestId('search__search')).toHaveClass('search__search--found');
+  });
+
+  it('render search__search__input-search component', () => {
+    const { getByTestId } = setup();
+    expect(getByTestId('search__search__input-search')).toBeInTheDocument();
+  });
+
+  it('render search__items component', () => {
+    const { getByTestId } = setup();
+    expect(getByTestId('search__items')).toBeInTheDocument();
+  });
+
+  it('render search__items__found component', () => {
+    const { getByTestId } = setup();
+    expect(getByTestId('search__items__found')).toBeInTheDocument();
+  });
+
+  it('not render search__items__found__title when search is empty', () => {
+    const { queryByTestId } = setup({ search: '', data: { items: [{ id: 'fooBar' }] } });
+    expect(queryByTestId('search__items__found__title')).not.toBeInTheDocument();
+  });
+
+  it('not render search__items__found__title when data.items is empty', () => {
+    const { queryByTestId } = setup({ search: 'fooBar', data: { items: [] } });
+    expect(queryByTestId('search__items__found__title')).not.toBeInTheDocument();
+  });
+
+  it('render search__items__found__title when search and data.items isnt`t empty', () => {
+    const randomText = `${Math.random()}`;
+    const { getByTestId } = setup({
+      search: 'fooBar',
+      data: {
+        items: [
+          {
+            id: '0',
+            volumeInfo: {
+              title: `title ${randomText}`,
+              authors: `authors ${randomText}`,
+              description: `description ${randomText}`,
+              imageLinks: {
+                smallThumbnail: `href ${randomText}`,
+              },
+              categories: `categories ${randomText}`,
+              pageCount: `pages ${randomText}`,
+              averageRating: `averageRating ${randomText}`,
+              language: `language ${randomText}`,
+            },
+          },
+        ],
+      },
+    });
+    expect(getByTestId('search__items__found__title')).toBeInTheDocument();
+  });
+
+  it('render search__items__found__infinite__scroll when search isn`t empty', () => {
+    const { getByTestId } = setup({ search: 'fooBar' });
+    expect(getByTestId('search__items__found__infinite__scroll')).toBeInTheDocument();
+  });
+
+  it('not render search__items__found__infinite__scroll when search is empty', () => {
+    const { queryByTestId } = setup({ search: '' });
+    expect(queryByTestId('search__items__found__infinite__scroll')).not.toBeInTheDocument();
+  });
+
+  it('render item__select-list', () => {
+    const { getByTestId } = setup();
+    expect(getByTestId('select-list')).toBeInTheDocument();
+  });
+
+  it('render search__items__component not excluding wishlist items (wishlist empty)', () => {
+    const randomText = `${Math.random()}`;
+    const { getByTestId } = setup({
+      search: 'fooBar',
+      data: {
+        items: [
+          {
+            id: '0',
+            volumeInfo: {
+              title: `title0 ${randomText}`,
+              authors: `authors ${randomText}`,
+              description: `description ${randomText}`,
+              imageLinks: {
+                smallThumbnail: `href ${randomText}`,
+              },
+              categories: `categories ${randomText}`,
+              pageCount: `pages ${randomText}`,
+              averageRating: `averageRating ${randomText}`,
+              language: `language ${randomText}`,
+            },
+          },
+          {
+            id: '1',
+            volumeInfo: {
+              title: `title1 ${randomText}`,
+              authors: `authors ${randomText}`,
+              description: `description ${randomText}`,
+              imageLinks: {
+                smallThumbnail: `href ${randomText}`,
+              },
+              categories: `categories ${randomText}`,
+              pageCount: `pages ${randomText}`,
+              averageRating: `averageRating ${randomText}`,
+              language: `language ${randomText}`,
+            },
+          },
+          {
+            id: '2',
+            volumeInfo: {
+              title: `title2 ${randomText}`,
+              authors: `authors ${randomText}`,
+              description: `description ${randomText}`,
+              imageLinks: {
+                smallThumbnail: `href ${randomText}`,
+              },
+              categories: `categories ${randomText}`,
+              pageCount: `pages ${randomText}`,
+              averageRating: `averageRating ${randomText}`,
+              language: `language ${randomText}`,
+            },
+          },
+          {
+            id: '3',
+            volumeInfo: {
+              title: `title3 ${randomText}`,
+              authors: `authors ${randomText}`,
+              description: `description ${randomText}`,
+              imageLinks: {
+                smallThumbnail: `href ${randomText}`,
+              },
+              categories: `categories ${randomText}`,
+              pageCount: `pages ${randomText}`,
+              averageRating: `averageRating ${randomText}`,
+              language: `language ${randomText}`,
+            },
+          },
         ],
       },
       wishList: {
@@ -137,117 +242,155 @@ describe('Search should render correctly ', () => {
         ],
       },
     });
-    const itemSearch = component.find('[data-test="search__items__component"]');
-    expect(itemSearch.props().items)
-      .toEqual([
-        { id: '1' },
-        { id: '2' },
-        { id: '3' },
-        { id: '4' },
-      ]);
+
+    expect(getByTestId('component-items')).toHaveTextContent(`title0 ${randomText}`);
+    expect(getByTestId('component-items')).toHaveTextContent(`title1 ${randomText}`);
+    expect(getByTestId('component-items')).toHaveTextContent(`title2 ${randomText}`);
+    expect(getByTestId('component-items')).toHaveTextContent(`title3 ${randomText}`);
   });
 
-  it('render search__items__component excluding wishlist items', async () => {
-    const mock = new MockAdapter(axios);
-    mock
-      .onGet('https://www.googleapis.com/books/v1/volumes?q=fooBar&startIndex=0')
-      .reply(200, { items: [] });
+  it('render search__items__component excluding wishlist items', () => {
+    const apiUrl = 'https://www.googleapis.com';
+    const path = new RegExp(`${apiUrl}/books/*`);
 
-    const storeRedux = storeFactory(initialState({
+    mock
+      .onGet(path)
+      .reply(200, response());
+
+    const randomText = `${Math.random()}`;
+    const { getByTestId } = setup({
       search: 'fooBar',
       data: {
         items: [
-          { id: '1' },
-          { id: '2' },
-          { id: '3' },
-          { id: '4' },
+          {
+            id: '0',
+            volumeInfo: {
+              title: `title0 ${randomText}`,
+              authors: `authors ${randomText}`,
+              description: `description ${randomText}`,
+              imageLinks: {
+                smallThumbnail: `href ${randomText}`,
+              },
+              categories: `categories ${randomText}`,
+              pageCount: `pages ${randomText}`,
+              averageRating: `averageRating ${randomText}`,
+              language: `language ${randomText}`,
+            },
+          },
+          {
+            id: '1',
+            volumeInfo: {
+              title: `title1 ${randomText}`,
+              authors: `authors ${randomText}`,
+              description: `description ${randomText}`,
+              imageLinks: {
+                smallThumbnail: `href ${randomText}`,
+              },
+              categories: `categories ${randomText}`,
+              pageCount: `pages ${randomText}`,
+              averageRating: `averageRating ${randomText}`,
+              language: `language ${randomText}`,
+            },
+          },
+          {
+            id: '2',
+            volumeInfo: {
+              title: `title2 ${randomText}`,
+              authors: `authors ${randomText}`,
+              description: `description ${randomText}`,
+              imageLinks: {
+                smallThumbnail: `href ${randomText}`,
+              },
+              categories: `categories ${randomText}`,
+              pageCount: `pages ${randomText}`,
+              averageRating: `averageRating ${randomText}`,
+              language: `language ${randomText}`,
+            },
+          },
+          {
+            id: '3',
+            volumeInfo: {
+              title: `title3 ${randomText}`,
+              authors: `authors ${randomText}`,
+              description: `description ${randomText}`,
+              imageLinks: {
+                smallThumbnail: `href ${randomText}`,
+              },
+              categories: `categories ${randomText}`,
+              pageCount: `pages ${randomText}`,
+              averageRating: `averageRating ${randomText}`,
+              language: `language ${randomText}`,
+            },
+          },
         ],
       },
       wishList: {
         items: [
-          { id: '1' },
-          { id: '3' },
+          {
+            id: '1',
+            volumeInfo: {
+              title: `title1 ${randomText}`,
+              authors: `authors ${randomText}`,
+              description: `description ${randomText}`,
+              imageLinks: {
+                smallThumbnail: `href ${randomText}`,
+              },
+              categories: `categories ${randomText}`,
+              pageCount: `pages ${randomText}`,
+              averageRating: `averageRating ${randomText}`,
+              language: `language ${randomText}`,
+            },
+          },
+          {
+            id: '3',
+            volumeInfo: {
+              title: `title3 ${randomText}`,
+              authors: `authors ${randomText}`,
+              description: `description ${randomText}`,
+              imageLinks: {
+                smallThumbnail: `href ${randomText}`,
+              },
+              categories: `categories ${randomText}`,
+              pageCount: `pages ${randomText}`,
+              averageRating: `averageRating ${randomText}`,
+              language: `language ${randomText}`,
+            },
+          },
         ],
       },
-    }));
+    });
 
-    const component = shallow(
-      <Search store={storeRedux} />,
-    )
-      .dive()
-      .dive();
-
-    const itemSearch = component.find('[data-test="search__items__component"]');
-    expect(itemSearch.props().items)
-      .toEqual([
-        { id: '2' },
-        { id: '4' },
-      ]);
+    expect(getByTestId('component-items')).toHaveTextContent(`title0 ${randomText}`);
+    expect(getByTestId('component-items')).not.toHaveTextContent(`title1 ${randomText}`);
+    expect(getByTestId('component-items')).toHaveTextContent(`title2 ${randomText}`);
+    expect(getByTestId('component-items')).not.toHaveTextContent(`title3 ${randomText}`);
   });
 
-  it('Scroll Infinite Scroll and call to getMorePages', async () => {
-    const storeRedux = storeFactory(initialState({ search: 'fooBar' }));
-    storeRedux.dispatch = jest.fn();
-    const component = shallow(
-      <Search store={storeRedux} />,
-    )
-      .dive()
-      .dive();
+  it('calls onChange on DebounceInput', async () => {
+    const randomText = `${Math.random()}`;
+    const apiUrl = 'https://www.googleapis.com';
+    const path = new RegExp(`${apiUrl}/books/*`);
+    mock
+      .onGet(path)
+      .reply(200, response());
 
-    const itemSearch = component.find('InfiniteScroll');
-
-    itemSearch.dive().instance().props.loadMore();
-
-    expect(itemSearch.length).toBe(1);
-    expect(storeRedux.dispatch).toHaveBeenCalledTimes(1);
-    expect(storeRedux.dispatch.mock.calls[0][0].toString()).toBe(
-      getMorePages().toString(),
-    );
-  });
-
-  it('If not Scroll Infinite Scroll, no calls on getMorePages', async () => {
-    const storeRedux = storeFactory(initialState({ search: 'fooBar' }));
-    storeRedux.dispatch = jest.fn();
-    const component = shallow(
-      <Search store={storeRedux} />,
-    )
-      .dive()
-      .dive();
-
-    const itemSearch = component.find('InfiniteScroll');
-
-    expect(itemSearch.length).toBe(1);
-    expect(storeRedux.dispatch).toHaveBeenCalledTimes(0);
-    expect(storeRedux.dispatch).not.toHaveBeenCalledWith(
-      getMorePages,
-    );
-  });
-
-  it('Changes redux items state when Scrolling Infinite Scroll', async () => {
-    const storeRedux = storeFactory(initialState({ search: 'fooBar' }));
-    const component = shallow(
-      <Search store={storeRedux} />,
-    )
-      .dive()
-      .dive();
-
-    const mock = new MockAdapter(axios);
-    const response = {
-      items: [
-        { id: 1 },
-        { id: 2 },
-        { id: 3 },
-      ],
+    let store;
+    const handleTest = jest.fn();
+    const component = (search) => {
+      store = storeFactory(initialState({ search }));
+      return (
+        <Provider store={store}>
+          <Search test={handleTest} />
+        </Provider>
+      );
     };
 
-    mock
-      .onGet('https://www.googleapis.com/books/v1/volumes?q=fooBar&startIndex=0')
-      .reply(200, response);
+    const { getByTestId } = render(component(''));
 
-    const itemSearch = component.find('InfiniteScroll');
-    await itemSearch.dive().instance().props.loadMore();
-    await component.update();
-    expect(storeRedux.getState().search).toBe('fooBar');
-    expect(storeRedux.getState().data).toEqual(response);
+    expect(getByTestId('search__search__input-search').value).toEqual('');
+
+    fireEvent.change(getByTestId('search__search__input-search'), { target: { value: `search ${randomText}` } });
+
+    expect(getByTestId('search__search__input-search').value).toEqual(`search ${randomText}`);
   });
 });

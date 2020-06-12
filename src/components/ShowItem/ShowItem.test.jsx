@@ -102,9 +102,6 @@ describe('if it renders props', () => {
               language: `language ${randomText}`,
             },
           },
-          {
-            id: '1',
-          },
         ],
       },
     }));

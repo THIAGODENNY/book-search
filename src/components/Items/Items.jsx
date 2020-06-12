@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import crypto from 'crypto';
 import Item from '../Item';
 import './Items.scss';
 
@@ -8,9 +9,9 @@ const Items = ({ items, addItemWishlist }) => {
     return <div className="component-items" />;
   }
   return (
-    <div className="component-items">
+    <div data-testid="component-items" className="component-items">
       {items && items.map((item) => (
-        <Item key={item.id} item={item} addItemWishlist={addItemWishlist} />
+        <Item key={crypto.randomBytes(16).toString('hex')} item={item} addItemWishlist={addItemWishlist} />
       ))}
     </div>
   );
