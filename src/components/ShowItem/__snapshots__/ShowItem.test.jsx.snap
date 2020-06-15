@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ShowItem should render correcly renders the component 1`] = `
+<body>
+  <div>
+    <div
+      class="show-item__body"
+      data-testid="show-item__body"
+    >
+      <div
+        class="show-item__body__description"
+        data-testid="show-item__body__description"
+      >
+        <h1
+          class="show-item__body__description__title"
+          data-testid="item__body__description__title"
+        />
+        <span
+          class="show-item__body__description__authors"
+          data-testid="show-item__body__description__authors"
+        />
+        <span
+          class="show-item__body__description__description"
+          data-testid="show-item__body__description__description"
+        />
+      </div>
+      <input
+        alt="logo"
+        class="show-item__body__image"
+        data-testid="show-item__body__image"
+        src="[object Object]"
+        type="image"
+      />
+      <div
+        class="show-item__body__info"
+        data-testid="show-item__body__info"
+      >
+        <span
+          class="show-item__body__info__categories"
+          data-testid="show-item__body__info__categories"
+        />
+        <span
+          class="show-item__body__info__pages"
+          data-testid="show-item__body__info__pages"
+        >
+          Pages:
+        </span>
+        <span
+          class="show-item__body__info__rating"
+          data-testid="show-item__body__info__rating"
+        >
+          Rating:
+        </span>
+        <span
+          class="show-item__body__info__language"
+          data-testid="show-item__body__info__language"
+        >
+          Language:
+        </span>
+      </div>
+      <form
+        class="show-item__body__submit-form"
+        data-testid="show-item__body__submit-form"
+      >
+        <input
+          class="show-item__body__submit-form__submit"
+          data-testid="show-item__body__submit-form__submit"
+          type="submit"
+          value="Delete"
+        />
+      </form>
+    </div>
+  </div>
+</body>
+`;

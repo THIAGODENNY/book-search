@@ -1,43 +1,106 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Search should render correctly  render search component correctly 1`] = `
-<div
-  className="search"
-  data-test="search"
+exports[`Search should render correctly  renders correclty 1`] = `
+<body
+  style="overflow: unset;"
 >
-  <div
-    className="search__search--found"
-  >
-    <input
-      className="search__search__input-search"
-      data-search="search__search__input-search"
-      onBlur={[Function]}
-      onChange={[Function]}
-      onKeyDown={[Function]}
-      type="text"
-      value="fooBar"
-    />
-  </div>
-  <div
-    className="search__items"
-    data-test="search__items"
-  >
+  <div>
     <div
-      className="search__items__found"
-      data-test="search__items__found"
+      class="search"
+      data-testid="search"
     >
-      <div>
+      <div
+        class="search__search--found"
+        data-testid="search__search"
+      >
+        <input
+          class="search__search__input-search"
+          data-testid="search__search__input-search"
+          type="text"
+          value="fooBar"
+        />
+      </div>
+      <div
+        class="search__items"
+        data-testid="search__items"
+      >
         <div
-          className="search__items__found__infinite__scroll"
-          data-test="search__items__found__infinite__scroll"
+          class="search__items__found"
+          data-testid="search__items__found"
         >
-          <div
-            className="component-items"
-          />
+          <div>
+            <h1
+              class="search__items__found__title"
+              data-testid="search__items__found__title"
+            >
+              Items found
+            </h1>
+            <div
+              class="search__items__found__infinite__scroll"
+              data-testid="search__items__found__infinite__scroll"
+            >
+              <div
+                class="component-items"
+                data-testid="component-items"
+              >
+                <div
+                  class="item"
+                  data-testid="item"
+                >
+                  <img
+                    alt="Logo"
+                    class="item__image"
+                    data-test="item__image"
+                    src="href"
+                    type="image"
+                  />
+                  <div
+                    class="item__content"
+                    data-test="item__content"
+                  >
+                    <a
+                      class="item__content__title"
+                      data-test="item__content__title"
+                    >
+                      <strong>
+                        title
+                      </strong>
+                    </a>
+                    <p
+                      class="item__content__description"
+                      data-test="item__content__description"
+                    >
+                      description
+                    </p>
+                  </div>
+                  <button
+                    class="item__button"
+                    data-test="item__button"
+                    type="button"
+                  >
+                    Add to list
+                  </button>
+                </div>
+              </div>
+              <div
+                class="loader"
+              >
+                Loading ...
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+      <div
+        data-testid="select-list"
+      />
     </div>
   </div>
-  <div />
-</div>
+  <div
+    class="ReactModalPortal"
+  />
+  <div
+    class="ReactModalPortal"
+  />
+</body>
 `;

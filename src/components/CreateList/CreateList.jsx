@@ -8,10 +8,11 @@ const CreateList = ({ createListIsOpen, handleCreateListClose, handleSubmitNewLi
     className="create-list"
     isOpen={createListIsOpen}
     onRequestClose={handleCreateListClose}
+    ariaHideApp={false}
   >
-    <form className="create-list__submit-form" onSubmit={handleSubmitNewList}>
+    <form data-testid="create-list__submit-form" className="create-list__submit-form" onSubmit={handleSubmitNewList}>
       <h1>Write a list to create:</h1>
-      <input type="text" name="list" required />
+      <input data-testid="create-list__submit-form__input" type="text" name="list" required />
       <input className="create-list__submit-form__submit" type="submit" />
     </form>
   </Modal>

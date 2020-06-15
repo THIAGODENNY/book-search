@@ -12,7 +12,7 @@ const setup = (item, addItemWishlist) => shallow(
 
 it('render without error', () => {
   const wrapper = setup();
-  const item = wrapper.find('[data-test="item"]');
+  const item = wrapper.find('[data-testid="item"]');
   expect(item.length).toBe(1);
 });
 

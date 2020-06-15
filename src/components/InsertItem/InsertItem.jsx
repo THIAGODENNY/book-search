@@ -20,14 +20,16 @@ const InsertItem = ({
 
   return (
     <Modal
+      data-testid="insert-item"
       className="insert-item"
       isOpen={isOpened}
       contentLabel="Selected Option"
       onRequestClose={onRequestClose}
+      ariaHideApp={false}
     >
       {item
         && (
-          <div className="insert-item__body">
+          <div data-testid="insert-item__body" className="insert-item__body">
             <div className="insert-item__body__description">
               <h1 className="insert-item__body__description__title">{item.volumeInfo.title}</h1>
               <span className="insert-item__body__description__authors">{item.volumeInfo.authors}</span>
@@ -51,7 +53,7 @@ const InsertItem = ({
             </div>
             <form className="insert-item__body__submit-form" onSubmit={handleSubmit}>
               <span className="insert-item__body__submit-form__title">Add to list:</span>
-              <select className="insert-item__body__submit-form__list" id="list" name="list" value={selectedListItem} onChange={handleSelectedListChange} required>
+              <select data-testid="insert-item__body__submit-form__list" className="insert-item__body__submit-form__list" id="list" name="list" value={selectedListItem} onChange={handleSelectedListChange} required>
                 {list.map((e) => <option key={e} value={e}>{e}</option>)}
               </select>
               <button type="button" className="insert-item__body__submit-form__create-list" onClick={handleCreateList}>+</button>

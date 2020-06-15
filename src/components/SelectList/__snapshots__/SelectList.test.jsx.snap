@@ -1,0 +1,156 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing if components renders correcly renders correcly 1`] = `
+<body
+  class="ReactModal__Body--open"
+  style="overflow: hidden;"
+>
+  <div
+    data-react-modal-body-trap=""
+    style="position: absolute; opacity: 0;"
+    tabindex="0"
+  />
+  <div>
+    <div
+      data-testid="select-list"
+    />
+  </div>
+  <div
+    class="ReactModalPortal"
+  >
+    <div
+      class="ReactModal__Overlay ReactModal__Overlay--after-open"
+      style="position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px; background-color: rgba(255, 255, 255, 0.75);"
+    >
+      <div
+        aria-label="Selected Option"
+        class="ReactModal__Content ReactModal__Content--after-open insert-item"
+        role="dialog"
+        tabindex="-1"
+      >
+        <div
+          class="insert-item__body"
+          data-testid="insert-item__body"
+        >
+          <div
+            class="insert-item__body__description"
+          >
+            <h1
+              class="insert-item__body__description__title"
+            >
+              title fooBar
+            </h1>
+            <span
+              class="insert-item__body__description__authors"
+            >
+              authors fooBar
+            </span>
+            <span
+              class="insert-item__body__description__description"
+            >
+              description fooBar
+            </span>
+          </div>
+          <input
+            alt="logo"
+            class="insert-item__body__image"
+            src="href fooBar"
+            type="image"
+          />
+          <div
+            class="insert-item__body__info"
+          >
+            <span
+              class="insert-item__body__info__categories"
+            >
+              categories fooBar
+            </span>
+            <span
+              class="insert-item__body__info__pages"
+            >
+              Pages:
+              pages fooBar
+            </span>
+            <span
+              class="insert-item__body__info__rating"
+            >
+              Rating:
+              averageRating fooBar
+            </span>
+            <span
+              class="insert-item__body__info__language"
+            >
+              Language:
+              language fooBar
+            </span>
+          </div>
+          <form
+            class="insert-item__body__submit-form"
+          >
+            <span
+              class="insert-item__body__submit-form__title"
+            >
+              Add to list:
+            </span>
+            <select
+              class="insert-item__body__submit-form__list"
+              data-testid="insert-item__body__submit-form__list"
+              id="list"
+              name="list"
+              required=""
+            />
+            <button
+              class="insert-item__body__submit-form__create-list"
+              type="button"
+            >
+              +
+            </button>
+            <input
+              class="insert-item__body__submit-form__submit"
+              type="submit"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    data-react-modal-body-trap=""
+    style="position: absolute; opacity: 0;"
+    tabindex="0"
+  />
+  <div
+    class="ReactModalPortal"
+  >
+    <div
+      class="ReactModal__Overlay ReactModal__Overlay--after-open"
+      style="position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px; background-color: rgba(255, 255, 255, 0.75);"
+    >
+      <div
+        class="ReactModal__Content ReactModal__Content--after-open create-list"
+        role="dialog"
+        tabindex="-1"
+      >
+        <form
+          class="create-list__submit-form"
+          data-testid="create-list__submit-form"
+        >
+          <h1>
+            Write a list to create:
+          </h1>
+          <input
+            data-testid="create-list__submit-form__input"
+            name="list"
+            required=""
+            type="text"
+          />
+          <input
+            class="create-list__submit-form__submit"
+            type="submit"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+`;

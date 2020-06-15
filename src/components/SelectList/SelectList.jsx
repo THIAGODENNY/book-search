@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, connect } from 'react-redux';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import InsertItem from '../InsertItem';
 import CreateList from '../CreateList';
 
@@ -9,21 +10,23 @@ import * as actionCreator from '../../redux/actions';
 const SelectList = ({
   selectedOption,
   onRequestClose,
-  updateList,
-  updateSelectedOption,
-  updateWishList,
-  handleCreateListClose,
-  handleCreateList,
+  data,
+  wishList,
+  list,
+  createListIsOpen,
+  selectActions,
 }) => {
   const { isOpened, id } = selectedOption;
-  const [selectedListItem, setSelectedListItem] = useState();
 
   const {
-    data,
-    wishList,
-    list,
-    createListIsOpen,
-  } = useSelector((state) => state);
+    updateList,
+    updateSelectedOption,
+    updateWishList,
+    handleCreateListClose,
+    handleCreateList,
+  } = selectActions;
+
+  const [selectedListItem, setSelectedListItem] = useState();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -63,7 +66,7 @@ const SelectList = ({
   }, [isOpened]);
 
   return (
-    <div>
+    <div data-testid="select-list">
       <InsertItem
         isOpened={isOpened}
         onRequestClose={onRequestClose}
@@ -89,11 +92,21 @@ SelectList.propTypes = {
     id: PropTypes.string,
   }).isRequired,
   onRequestClose: PropTypes.func.isRequired,
-  updateList: PropTypes.func.isRequired,
-  updateSelectedOption: PropTypes.func.isRequired,
-  updateWishList: PropTypes.func.isRequired,
-  handleCreateListClose: PropTypes.func.isRequired,
-  handleCreateList: PropTypes.func.isRequired,
+  data: PropTypes.shape({
+    items: PropTypes.array,
+  }).isRequired,
+  wishList: PropTypes.shape({
+    items: PropTypes.array,
+  }).isRequired,
+  list: PropTypes.arrayOf(PropTypes.string).isRequired,
+  createListIsOpen: PropTypes.bool.isRequired,
+  selectActions: PropTypes.shape({
+    updateList: PropTypes.func.isRequired,
+    updateSelectedOption: PropTypes.func.isRequired,
+    updateWishList: PropTypes.func.isRequired,
+    handleCreateListClose: PropTypes.func.isRequired,
+    handleCreateList: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 SelectList.defaults = {
@@ -103,12 +116,15 @@ SelectList.defaults = {
   },
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  updateList: (event) => dispatch(actionCreator.updateList(event)),
-  updateSelectedOption: (event) => dispatch(actionCreator.updateSelectedOption(event)),
-  updateWishList: (event) => dispatch(actionCreator.updateWishList(event)),
-  handleCreateListClose: (event) => dispatch(actionCreator.handleCreateListClose(event)),
-  handleCreateList: (event) => dispatch(actionCreator.handleCreateList(event)),
+const mapStateToProps = (state) => ({
+  data: state.data,
+  wishList: state.wishList,
+  list: state.list,
+  createListIsOpen: state.createListIsOpen,
 });
 
-export default connect(null, mapDispatchToProps)(SelectList);
+const mapDispatchToProps = (dispatch) => ({
+  selectActions: bindActionCreators(actionCreator, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectList);

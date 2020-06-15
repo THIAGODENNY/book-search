@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Item.scss';
+import crypto from 'crypto';
 import defaultImage from '../../assets/No-Image-Available.png';
 
 const Item = ({ item, addItemWishlist }) => {
@@ -14,7 +15,7 @@ const Item = ({ item, addItemWishlist }) => {
   const { smallThumbnail } = imageLinks || [undefined];
 
   return (
-    <div key={id} data-test="item" className="item">
+    <div key={crypto.randomBytes(16).toString('hex')} data-testid="item" className="item">
       <img
         data-test="item__image"
         className="item__image"
