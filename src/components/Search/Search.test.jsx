@@ -375,12 +375,11 @@ describe('Search should render correctly ', () => {
       .reply(200, response());
 
     let store;
-    const handleTest = jest.fn();
     const component = (search) => {
       store = storeFactory(initialState({ search }));
       return (
         <Provider store={store}>
-          <Search test={handleTest} />
+          <Search />
         </Provider>
       );
     };
